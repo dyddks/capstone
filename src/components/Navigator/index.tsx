@@ -5,10 +5,16 @@ const Container = styled.div`
     display: flex;
 `;
 const Nav = styled(Link)`
-    padding: 0 30px;
+    padding: 10px 30px;
     text-decoration: none;
     color: black;
     font-weight: bold;
+    font-size: 1.2rem;
+    border-radius: 4px;
+
+    :hover{
+        background-color: #d7d4d4;
+    }
 `;
 
 export const Navigator = () => {
@@ -18,7 +24,7 @@ export const Navigator = () => {
             <Nav to='/notice'>공지사항</Nav>
             <Nav to = '/analysis'>가스사용량분석</Nav>
             <Nav to='/community'>커뮤니티</Nav>
-            <Nav to={localStorage.getItem('email') !== null ? '/mypage' : '/login'}>내 정보</Nav>
+            <Nav to={sessionStorage.getItem('id') !== null ? '/mypage' : '/login'}>내 정보</Nav>
         </Container>
     );
 };

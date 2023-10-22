@@ -1,19 +1,15 @@
 import styled from "@emotion/styled";
 import { Button } from 'components/Button';
 import { Link, useNavigate } from "react-router-dom";
-import { UserDataContext } from 'context/UserData/UserDataContext';
-import { useState, useEffect, useContext } from 'react';
-import Navigator from 'components/Navigator';
+import { useState, useEffect } from 'react';
 
 const Container = styled.div`
     display: flex;
-    padding: 16px;
+    padding: 16px 24px;
     background-color: #ffffff;
     decoration: none;
     justify-content: space-between;
     align-items: center;
-    min-width: 1200px;
-    margin-bottom: 5%;
 `;
 const Nav = styled.div`
     display: flex;
@@ -22,9 +18,7 @@ const Title = styled(Link)`
     text-decoration: none;
     font-size: 32px;
     font-weight: bold;
-`;
-const Name = styled.div`
-    font-size: 16px;
+    font-family: 'ONE-Mobile-POP';
 `;
 
 export const Header = () => {
@@ -41,7 +35,7 @@ export const Header = () => {
 
     const logOut = () => {
         if(login === '로그아웃'){
-            sessionStorage.removeItem('email')
+            sessionStorage.clear();
             window.location.replace('/')
         }
         else(
@@ -58,7 +52,6 @@ export const Header = () => {
     return(
         <Container>
             <Title to ='/'>Capston</Title>
-            <Navigator />
             <Nav>
                 {/* {localStorage.getItem('email') && <Name>{localStorage.getItem('email')}님 환영합니다.</Name>} */}
                 <Button label={login} onClick={logOut}/>

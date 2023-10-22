@@ -1,16 +1,18 @@
 import styled from '@emotion/styled';
 
 const Container = styled.button`
-    border: 1px solid black;
+    border: 2px solid black;
     color: #000000;
     background-color: ${(props) => props.color};
     cursor: pointer;
     padding: 8px 16px;
-    margin: 8px 16px;
-    border-radius: 4px;
+    margin: 1rem;
+    border-radius: 8px;
+    font-family: 'ONE-Mobile-POP';
+
     &:hover{
         background-color: ${(props) => props.color};
-        opacity: 0.8;
+        opacity: 0.5;
     }
     
     &:active{

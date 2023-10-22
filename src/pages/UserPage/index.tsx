@@ -8,6 +8,7 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10% 0;
 `;
 
 export const UserPage = () => {

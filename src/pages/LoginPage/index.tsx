@@ -8,14 +8,19 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 10% 0;
 `;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+`;
+
 
 export const LoginPage = () => {
     return(
         <Container>
             <SignInForm title="로그인"/>
             <p>
-                계정이 없습니까? <Link to={"/register"}>가입하기</Link>
+                계정이 없습니까? <StyledLink to={"/register"}>가입하기</StyledLink>
             </p>
         </Container>
     );

@@ -1,8 +1,10 @@
 import styled from "@emotion/styled";
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/Button";
 import { useState } from "react";
-import { FormMethod } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.form`
     display: flex;
@@ -12,12 +14,17 @@ const Container = styled.form`
     border-radius: 4px;
     border: 1px solid black;
     box-shadow: 5px 5px 5px 5px lightgray;
+    width: 50%;
+    margin-bottom: 2rem;
 `;
-
-const Input = styled.input`
+const H1 = styled.h1`
+    margin-top: 5%;
+    font-weight: bold;
+`;
+const InputSet = styled.div`
     display: flex;
-    justify-content: space-between;
-    font-size: 16px;
+    flex-direction: column;
+    font-size: 1rem;
     padding: 10px 15px;
     margin: 8px;
     border-radius: 4px;
@@ -46,6 +53,7 @@ interface FormValue {
 }
 
 export const SignUpForm = ({title}: Props) => {
+    const nav = useNavigate();
 // react-form-hook 
     const { register, handleSubmit, formState: {errors}, reset , getValues} = useForm<FormValue>({
         mode: 'onSubmit'
@@ -68,12 +76,14 @@ export const SignUpForm = ({title}: Props) => {
         })
         .then(Response => Response.json())
         .then((json) => {
-            if(json.status === 1){
+            
+            if(json.id === "이미 가입된 이메일입니다."){
+                alert(json.id);
+                
+            }else {
                 alert("회원가입을 축하합니다.");
-            }else{ 
-                alert("사용중인 이메일입니다.");
+                nav('/');
             }
-            console.log(json);
         })
         .catch((error) => {
             console.error(error);
@@ -106,15 +116,25 @@ export const SignUpForm = ({title}: Props) => {
 
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
-            <h1>{title}</h1>
-            <Input placeholder="Name" {...register("name", userName)}/>
+            <H1>{title}</H1>
+            <InputSet>
+            <FloatingLabel controlId="floatingInput" label="Name" className="mb-3">
+                <Form.Control type="text" placeholder="name" {...register("name", userName)} />
+            </FloatingLabel>
             {errors?.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
-            <Input placeholder="Phone" {...register("phone", userPhone)}/>
+            <FloatingLabel controlId="floatingInput" label="Phone Number" className="mb-3">
+                <Form.Control type="text" placeholder="phone" {...register("phone", userPhone)} />
+            </FloatingLabel>
             {errors?.phone && <ErrorMessage>{errors.phone.message}</ErrorMessage>}
-            <Input type="email" placeholder="E-mail" {...register("email", userEmail)}/>
+            <FloatingLabel controlId="floatingInput" label="Email Address" className="mb-3">
+                <Form.Control type="email" placeholder="email" {...register("email", userEmail)} />
+            </FloatingLabel>
             {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-            <Input type="password" placeholder="Password" {...register("password", userPassword)}/>
+            <FloatingLabel controlId="floatingInput" label="Password" className="mb-3">
+                <Form.Control type="password" placeholder="password" {...register("password", userPassword)}/>
+            </FloatingLabel>
             {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+            </InputSet>
             <Button label={title}></Button>
         </Container>
     )

@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/Button";
 import { useContext } from 'react';
 import { UserDataContext } from 'context/UserData/UserDataContext';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.form`
     display: flex;
@@ -12,16 +13,6 @@ const Container = styled.form`
     border-radius: 4px;
     border: 1px solid black;
     box-shadow: 5px 5px 5px 5px lightgray;
-`;
-
-const Id = styled.div`
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    padding: 10px 15px;
-    margin: 8px;
-    border-radius: 4px;
-    width:80%;
 `;
 
 const Input = styled.input`
@@ -44,16 +35,20 @@ const ErrorMessage = styled.div`
     margin: 8px;
     
 `;
+const Id = styled.input`
+    visible: false;
+    
+`;
 
 interface Props{
     readonly title: string;
 }
 interface FormValue {
-    email: string,
     password: string
 }
 
 export const DeleteForm = ({title}: Props) => {
+    const nav = useNavigate();
 // react-form-hook 
     const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
         mode: 'onChange'
@@ -61,31 +56,35 @@ export const DeleteForm = ({title}: Props) => {
     const userDataContext = useContext(UserDataContext);
 // 유효성 통과 됬을때 submitHandler
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-        const { email, password } = data
-        if(data.password === userDataContext.userPassword){
-            fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
+        const Data = {
+            id: sessionStorage.getItem('id'),
+            password: data.password
+        } ;
+        const {id, password} = Data;
+        fetch("/user/delete", {
+            method: 'DELETE',
             body: JSON.stringify({
-                email,
-                password,
+                id,
+                password
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
         })
         .then(Response => Response.json())
+        .then((json)=>{
+            if(json.state === 1){
+                sessionStorage.removeItem('email');
+                sessionStorage.removeItem('id');
+                alert("회원탈퇴가 완료되었습니다.")
+                nav('/');
+            }else{
+                alert("비밀번호가 틀립니다.")
+            }
+        })
         .catch((error) => {
             console.error(error);
         });
-        alert("회원탈퇴가 완료되었습니다.")
-        }
-        else{
-            alert("비밀번호가 틀립니다.")
-        }
-    }
-// email 유효성 검사 조건
-    const userEmail = {
-        required: "필수 필드입니다.",
     }
 // password 유효성 검사 조건
     const userPassword = {
@@ -103,10 +102,7 @@ export const DeleteForm = ({title}: Props) => {
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <h1>{title}</h1>
-            <Id>{userDataContext.userEmail}</Id>
-            {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-            
-            <Input type="password" placeholder="Password" {...register("password", userPassword)}/>
+            <Input type="password" placeholder="비밀번호 확인" {...register("password", userPassword)}/>
             {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
             <Button label={title}></Button>
         </Container>

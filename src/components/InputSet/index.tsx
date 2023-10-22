@@ -2,11 +2,10 @@ import styled from "@emotion/styled";
 
 const Container = styled.div`
     display: flex;
-    flex-direction: column;
 `;
 
 const Label = styled.div`
-    font-size: 1.2em;
+    font-size: 1em;
     padding: 8px 0;
 `;
 

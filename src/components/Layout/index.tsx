@@ -9,8 +9,9 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    overflow: scroll;
+    height: 100%;
+    width: 100%;
+    min-width: 1200px;
 `;
 
 export const Layout = () => {

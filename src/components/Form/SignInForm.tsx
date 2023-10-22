@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/Button";
 import { useEffect, useState } from "react";
@@ -15,12 +17,17 @@ const Container = styled.form`
     border-radius: 4px;
     border: 1px solid black;
     box-shadow: 5px 5px 5px 5px lightgray;
+    width: 50%;
+    margin-bottom: 2rem;
 `;
-
-const Input = styled.input`
+const H1 = styled.h1`
+    margin-top: 5%;
+    font-weight: bold;
+`;
+const InputSet = styled.div`
     display: flex;
-    justify-content: space-between;
-    font-size: 16px;
+    flex-direction: column;
+    font-size: 1rem;
     padding: 10px 15px;
     margin: 8px;
     border-radius: 4px;
@@ -51,46 +58,36 @@ export const SignInForm = ({title}: Props) => {
     const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
         mode: 'onChange'
     });
-    const userDataContext = useContext(UserDataContext);
-    const nav = useNavigate()
+    const nav = useNavigate();
 // 유효성 통과 됬을때 submitHandler
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-        const { email, password } = data
-        // fetch("/user/login", {
-        //     method: 'POST',
-        //     body: JSON.stringify({
-        //         email,
-        //         password,
-        //     }),
-        //     headers: {
-        //         'Content-type': 'application/json; charset=UTF-8',
-        //     },
-        // })
-        // .then(Response => Response.json())
-        // .then((json) => {
-        //     if(json.status === 500){
-        //         alert("이메일이나 비밀번호가 틀렸습니다.")
-        //     }else{
-        //         const{id, email, password} = json
-        //         userDataContext.GetUserId(id);
-        //         userDataContext.GetUserEmail(email);
-        //         userDataContext.GetUserPassword(password);
-        //         useEffect(() => {
-        //             localStorage.setItem('email', email);
-        //             localStorage.setItem('id', id);
-        //         })
-        //         alert(userDataContext.userEmail+ "님 환영합니다")
-        //         nav('/')
-        //         console.log(json)
-        //     }
-        // })
-        // .catch((error) => {
-        //     console.error(error);
-        // });
-        sessionStorage.setItem('email', email);
-        alert(email+ "님 환영합니다")
-
-        nav('/')
+        const {email, password} = data
+        fetch("user/login", {
+            method: 'POST',
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(Response => Response.json())
+        .then((json) => {
+            if(json === null){
+                alert("이메일이나 비밀번호가 틀렸습니다.")
+            }else{
+                sessionStorage.setItem('email', json.email);
+                sessionStorage.setItem('id', json.id);
+                sessionStorage.setItem('phone', json.phone);
+                sessionStorage.setItem('name', json.name)
+                alert(sessionStorage.name+ "님 환영합니다");
+                nav(-1);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     }
 // email 유효성 검사 조건
     const userEmail = {
@@ -111,12 +108,17 @@ export const SignInForm = ({title}: Props) => {
 
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
-            <h1>{title}</h1>
-            <Input type="email" placeholder="E-mail" {...register("email", userEmail)}/>
-            {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-            
-            <Input type="password" placeholder="Password" {...register("password", userPassword)}/>
-            {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+            <H1>{title}</H1>
+            <InputSet>
+                <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
+                    <Form.Control type="email" placeholder="name@example.com" {...register("email", userEmail)} />
+                </FloatingLabel>
+                {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
+                <FloatingLabel controlId="floatingPassword" label="Password" >
+                    <Form.Control type="password" placeholder="Password" {...register("password", userPassword)} />
+                </FloatingLabel>
+                {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
+            </InputSet>
             <Button label={title}></Button>
         </Container>
     )

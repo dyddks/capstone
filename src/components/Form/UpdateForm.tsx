@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/Button";
 import { useContext, useState } from 'react';
 import { UserDataContext } from 'context/UserData/UserDataContext';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -78,14 +78,14 @@ export const UpdateForm = ({title}: Props) => {
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
             },
-        })
-        .then(Response => Response.json())
-        .then((json) => console.log(json))
-        .catch((error) => {
-            console.error(error);
-        });
-        alert("비밀번호가 변경되었습니다.")
-        reset
+            })
+            .then(Response => Response.json())
+            .then((json) => console.log(json))
+            .catch((error) => {
+                console.error(error);
+            });
+            alert("비밀번호가 변경되었습니다.")
+            reset
         }
         else{
             alert("현재 비밀번호가 올바르지 않습니다.")
@@ -126,7 +126,7 @@ export const UpdateForm = ({title}: Props) => {
     return(
         <Container>
             <h1>{title}</h1>
-            <Div>{localStorage.getItem('email')}</Div>
+            <Div>{sessionStorage.getItem('email')}</Div>
             <Div>{userDataContext.userPassword}</Div>
             <InputSet onSubmit={handleSubmit(updatePassword)}>
                 <Input type="password" placeholder="현재 비밀번호" {...register("cerrentPassword")} />
@@ -140,6 +140,7 @@ export const UpdateForm = ({title}: Props) => {
                 <Button label='수정' onClick={updatePhoneNunber}></Button>
             </InputSet>
             <Link to='/'><Button label={title} /></Link>
+            <Link to='/delete'>회원탈퇴</Link>
         </Container>
     )
 };
