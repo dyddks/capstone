@@ -20,27 +20,19 @@ const PageButton = styled.button`
 `;
 
 interface Item {
-    readonly id: string;
+    readonly num: number;
     readonly title: string;
-    readonly content: string;
     readonly userName: string;
+    readonly createdAt: string;
 }
 
 export const ComuBoard = () => {
-    const [items, setItems] = useState<ReadonlyArray<Item>>([
-        // {id: '1',
-        // title: '가스분석 어떻게 하나요?',
-        // body: '몰라',
-        // userName: 'dyddks'},
-        // {id: '2',
-        //     title: '나 가스 요금 폭탄 맞음;;',
-        //     body: '몰라2',
-        //     userName: '광호'}
-    ]);
-    const itemsPerPage = 10;
+    const [items, setItems] = useState<ReadonlyArray<Item>>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [ totalPage, setTotalPage ] = useState(1);
+    const itemsPerPage = 10;
     const totalPages = Math.ceil(items.length / itemsPerPage);
-
+    
     const handleClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
@@ -49,14 +41,15 @@ export const ComuBoard = () => {
         fetch("/board/list") //서버에서 게시물 리스트 받아오기
         .then(Response => Response.json())
         .then((json) => setItems(json))
+        .then((json) => console.log(json))
         .catch((error) => {
             console.error(error);
         });
-    }, [currentPage]);
-    
+    }, []);
+
     return(
         <Container>
-            {items.map((item) => (<BoardItem key={item.id} id={item.id} title={item.title} body={item.content} userName={item.userName}></BoardItem>))}
+            {/* {items.map((item) => (<BoardItem key={item.num} num={item.num} title={item.title} userName={item.userName} createAt={item.createdAt}></BoardItem>))}
             <div>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (pageNumber) => (
@@ -69,7 +62,7 @@ export const ComuBoard = () => {
                 </PageButton>
             )
             )}
-            </div>
+            </div> */}
         </Container>
     );
 };

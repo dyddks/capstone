@@ -13,6 +13,9 @@ const Container = styled.form`
     border-radius: 4px;
     border: 1px solid black;
     box-shadow: 5px 5px 5px 5px lightgray;
+    padding: 24px;
+    width: 60%;
+    background-color: rgba(255, 255, 255, 0.7);
 `;
 
 const Input = styled.input`
@@ -47,7 +50,7 @@ interface FormValue {
     password: string
 }
 
-export const DeleteForm = ({title}: Props) => {
+export const UnRegisterForm = () => {
     const nav = useNavigate();
 // react-form-hook 
     const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
@@ -101,10 +104,10 @@ export const DeleteForm = ({title}: Props) => {
 
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
-            <h1>{title}</h1>
+            <h1>회원탈퇴</h1>
             <Input type="password" placeholder="비밀번호 확인" {...register("password", userPassword)}/>
             {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-            <Button label={title}></Button>
+            <Button label='회원탈퇴'></Button>
         </Container>
     )
 };

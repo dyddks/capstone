@@ -81,19 +81,23 @@ export const WritePage = () => {
     })
 
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-        const {title, content} = data
+        const Data = {
+            user_Id: sessionStorage.getItem('id'),
+            title: data.title,
+            content: data.content
+        } ;
+        const {user_Id, title, content} = Data
         if(title === null){
             alert('제목을 입력해 주세요')
         }else if(content === null){
             alert('내용을 입력해 주세요')
         }else{
-            const user_Id = sessionStorage.getItem('id')
-            fetch("/board/new-write", {
+            fetch("/board/write", {
                 method: 'POST',
                 body: JSON.stringify({
+                    user_Id,
                     title,
-                    content,
-                    user_Id
+                    content
                 }),
                 headers: {
                     'Contesnt-type': 'application/json; charset=UTF-8',
@@ -102,7 +106,7 @@ export const WritePage = () => {
             .catch((error) => {
                 console.error(error);
             });
-            alert('등록되었습니다.')
+            alert('게시글이 등록되었습니다.')
             nav('/community')
         }
     }
@@ -111,8 +115,8 @@ export const WritePage = () => {
             <Div>자유게시판</Div>
             <Label>게시글 작성</Label>
             <Hr/>
-            <Title id='title' placeholder='제목을 입력해 주세요' defaultValue={title}{...register("title")}/>
-            <Body id='body' placeholder='내용을 입력해 주세요' maxLength={500} defaultValue={content} {...register("content")}/>
+            <Title id='title' placeholder='제목을 입력해 주세요' value={title}{...register("title")}/>
+            <Body id='body' placeholder='내용을 입력해 주세요' maxLength={500} value={content} {...register("content")}/>
             <Button label='등록'></Button>
             <StyledLink to='/community'>뒤로가기</StyledLink>
         </Container>

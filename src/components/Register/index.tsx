@@ -12,10 +12,11 @@ const Container = styled.form`
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     box-shadow: 5px 5px 5px 5px lightgray;
     width: 50%;
     margin-bottom: 2rem;
+    background-color: rgba(255, 255, 255, 0.7);
 `;
 const H1 = styled.h1`
     margin-top: 5%;
@@ -52,7 +53,7 @@ interface FormValue {
     password: string
 }
 
-export const SignUpForm = ({title}: Props) => {
+export const RegisterForm = ({title}: Props) => {
     const nav = useNavigate();
 // react-form-hook 
     const { register, handleSubmit, formState: {errors}, reset , getValues} = useForm<FormValue>({

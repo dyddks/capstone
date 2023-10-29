@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { PostDetail } from 'components/PostDetail';
 import { Comment } from 'components/Comment';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -13,10 +14,12 @@ const Container = styled.div`
 `;
 
 export const DetailPage = () => {
+    const nav = useNavigate();
     return(
         <Container>
             <PostDetail/>
             <Comment/>
+            <button onClick={() => nav(-1)}>목록으로</button>
         </Container>
     );
 };

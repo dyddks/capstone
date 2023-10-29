@@ -1,103 +1,53 @@
 import styled from "@emotion/styled";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { Button } from "components/Button";
-import { useContext, useState } from 'react';
-import { UserDataContext } from 'context/UserData/UserDataContext';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     border-radius: 4px;
     border: 1px solid black;
     box-shadow: 5px 5px 5px 5px lightgray;
-`;
-
-const Div = styled.div`
-    display: flex;
-    justify-content: space-between;
-    font-size: 16px;
-    padding: 10px 15px;
-    margin: 8px;
-    border-radius: 4px;
-    width:80%;
+    text-align: center;
+    padding: 24px;
+    width: 60%;
 `;
 
 const Input = styled.input`
     display: flex;
-    justify-content: space-between;
     font-size: 16px;
     padding: 10px 15px;
     margin: 8px;
     border-radius: 4px;
     width:80%;
-`;
-
-const ErrorMessage = styled.div`
-    background-color: gray;
-    border-radius: 4px;
-    color: #ffffff;
-    font-size: 16px;
-    width: 90%;
-    padding: 4px;
-    margin: 8px;
-    
 `;
 
 const InputSet = styled.form`
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;
 
-interface Props{
-    readonly title: string;
-}
-interface FormValue {
-    cerrentPassword: string,
-    updatePassword: string
-}
+export const UpdateForm = () => { 
+    const [phone, setPhone] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
 
-export const UpdateForm = ({title}: Props) => {
-// react-form-hook 
-    const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
-        mode: 'onSubmit'
-    });
-    const userDataContext = useContext(UserDataContext);
-    const [updatePhone, setUpdatePhone] = useState('');
+    const id = sessionStorage.getItem('id');
+    const cerrentName = sessionStorage.getItem('name');
+    const cerrentPassword = sessionStorage.getItem('password');
+    const cerrentPhone = sessionStorage.getItem('phone');
 
-// 유효성 통과 됬을때 submitHandler
-    const updatePassword: SubmitHandler<FormValue> = (data) => {
-        if(data.cerrentPassword === userDataContext.userPassword){
-            fetch('https://jsonplaceholder.typicode.com/posts', {
+    const updatePassword = () => {
+        fetch('user/update', {
             method: 'POST',
             body: JSON.stringify({
-                data
-            }),
-            headers: {
-                'Content-type': 'application/json; charset=UTF-8',
-            },
-            })
-            .then(Response => Response.json())
-            .then((json) => console.log(json))
-            .catch((error) => {
-                console.error(error);
-            });
-            alert("비밀번호가 변경되었습니다.")
-            reset
-        }
-        else{
-            alert("현재 비밀번호가 올바르지 않습니다.")
-        }
-    }
-
-    const updatePhoneNunber = () => {
-        console.log(updatePhone)
-        fetch('https://jsonplaceholder.typicode.com/posts', {
-            method: 'POST',
-            body: JSON.stringify({
-                updatePhone
+                id,
+                cerrentName,
+                password,
+                cerrentPhone
             }),
             headers: {
                 'Content-type': 'application/json; charset=UTF-8',
@@ -110,37 +60,64 @@ export const UpdateForm = ({title}: Props) => {
         });
         alert("회원정보가 변경되었습니다.");
     }
-// password 유효성 검사 조건
-    const userPassword = {
-        required: "필수 필드입니다.",
-        minLength: {
-            value: 4,
-            message: "최소 4자입니다.",
-        },
-        maxLength: {
-            value: 13,
-            message: "최대 13자입니다.",
-        },
-    };
+
+    const updateName = () => {
+        fetch('user/update', {
+            method: 'POST',
+            body: JSON.stringify({
+                id,
+                name,
+                cerrentPassword,
+                cerrentPhone
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(Response => Response.json())
+        .then((json) => console.log(json))
+        .catch((error) => {
+            console.error(error)
+        });
+        alert("회원정보가 변경되었습니다.");
+    }
+
+    const updatePhoneNunber = () => {
+        fetch('user/update', {
+            method: 'POST',
+            body: JSON.stringify({
+                id,
+                cerrentName,
+                cerrentPassword,
+                phone
+            }),
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+        })
+        .then(Response => Response.json())
+        .then((json) => console.log(json))
+        .catch((error) => {
+            console.error(error)
+        });
+        alert("회원정보가 변경되었습니다.");
+    }
 
     return(
         <Container>
-            <h1>{title}</h1>
-            <Div>{sessionStorage.getItem('email')}</Div>
-            <Div>{userDataContext.userPassword}</Div>
-            <InputSet onSubmit={handleSubmit(updatePassword)}>
-                <Input type="password" placeholder="현재 비밀번호" {...register("cerrentPassword")} />
-                <Input type="password" placeholder="변경할 비밀번호" {...register("updatePassword", userPassword)} />
-                {errors?.updatePassword && <ErrorMessage>{errors.updatePassword.message}</ErrorMessage>}
-                <Button label='비밀번호 변경'></Button>
-            </InputSet>
-            <Div>{userDataContext.userPhone}</Div>
+            <h1>회원정보 수정</h1>
             <InputSet>
-                <Input placeholder='변경할 핸드폰번호' onChange={(e) => setUpdatePhone(e.target.value)}/>
-                <Button label='수정' onClick={updatePhoneNunber}></Button>
+                <Input type="password" placeholder="변경할 비밀번호" onChange={(e) => setPassword(e.target.value)} className="mb-3"/>
+                <Button label='비밀번호 변경' onClick={updatePassword}></Button>
             </InputSet>
-            <Link to='/'><Button label={title} /></Link>
-            <Link to='/delete'>회원탈퇴</Link>
+            <InputSet>
+                <Input placeholder='이름 변경' onChange={(e) => setName(e.target.value)} className="mb-3"/>
+                <Button label='이름 변경' onClick={updateName}></Button>
+            </InputSet>
+            <InputSet>
+                <Input placeholder='핸드폰번호 변경 -를 포함하여 입력' onChange={(e) => setPhone(e.target.value)} className="mb-3"/>
+                <Button label='핸드폰번호 변경' onClick={updatePhoneNunber}></Button>
+            </InputSet>
         </Container>
     )
 };

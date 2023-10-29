@@ -14,7 +14,7 @@ export const UpdatePage = () => {
     
     return(
         <Container>
-            <UpdateForm title="회원정보 수정"/>
+            <UpdateForm />
         </Container>
     );
 };

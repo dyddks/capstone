@@ -11,7 +11,7 @@ const Nav = styled(Link)`
     font-weight: bold;
     font-size: 1.2rem;
     border-radius: 4px;
-
+    font-family: 'TAEBAEKfont';
     :hover{
         background-color: #d7d4d4;
     }
@@ -24,7 +24,6 @@ export const Navigator = () => {
             <Nav to='/notice'>공지사항</Nav>
             <Nav to = '/analysis'>가스사용량분석</Nav>
             <Nav to='/community'>커뮤니티</Nav>
-            <Nav to={sessionStorage.getItem('id') !== null ? '/mypage' : '/login'}>내 정보</Nav>
         </Container>
     );
 };

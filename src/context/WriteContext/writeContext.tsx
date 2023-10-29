@@ -1,32 +1,32 @@
 import { createContext, useState } from "react";
 
 interface Context {
-    readonly id: string;
+    readonly num: number;
     readonly title: string;
     readonly content: string;
-    readonly writeDay: string;
+    readonly createAt: string;
     readonly value: number;
-    readonly storeId: (data: string) => void;
+    readonly storeNum: (data: number) => void;
     readonly storeTitle: (data: string) => void;
     readonly storeContent: (data: string) => void;
-    readonly storeWriteDay: (data: string) => void;
+    readonly storeCreateAt: (data: string) => void;
     readonly storeValue: (data: number) => void;
 }
 
 const WriteContext = createContext<Context>({
-    id: '',
+    num: 0,
     title: '',
     content: '',
-    writeDay: '',
+    createAt: '',
     value: 0,
     /* eslint-disable @typescript-eslint/no-empty-function */
-    storeId: (): void => {},
+    storeNum: (): void => {},
     /* eslint-disable @typescript-eslint/no-empty-function */
     storeTitle: (): void => {},
     /* eslint-disable @typescript-eslint/no-empty-function */
     storeContent: (): void => {},
     /* eslint-disable @typescript-eslint/no-empty-function */
-    storeWriteDay: (): void => {},
+    storeCreateAt: (): void => {},
     /* eslint-disable @typescript-eslint/no-empty-function */
     storeValue: (): void => {},
 });
@@ -36,20 +36,20 @@ interface Props{
 }
 
 const WriteContextProvider = ({children}: Props) => {
-    const [id, setId] = useState('');
+    const [num, setNum] = useState(0);
     const [title, setTitle] = useState('');
-    const [writeDay, setWriteDay] = useState('');
+    const [createAt, setCreateAt] = useState('');
     const [content, setContent] = useState('');
     const [value, setValue] = useState(0);
 
-    const storeId = (data: string) => {
-        setId(data);
+    const storeNum = (data: number) => {
+        setNum(data);
     }
     const storeTitle = (data: string) => {
         setTitle(data);
     }
-    const storeWriteDay = (data: string) => {
-        setWriteDay(data);
+    const storeCreateAt = (data: string) => {
+        setCreateAt(data);
     }
     const storeContent= (data: string) => {
         setContent(data);
@@ -60,14 +60,14 @@ const WriteContextProvider = ({children}: Props) => {
     return(
         <WriteContext.Provider
         value={{
-            id,
+            num,
             title,
-            writeDay,
+            createAt,
             content,
             value,
-            storeId,
+            storeNum,
             storeTitle,
-            storeWriteDay,
+            storeCreateAt,
             storeContent,
             storeValue
         }}>

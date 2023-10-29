@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { SignInForm } from "components/Form/SignInForm";
+import { LogInForm } from "components/LogIn/LogInForm";
 
 
 const Container = styled.div`
@@ -18,7 +18,7 @@ const StyledLink = styled(Link)`
 export const LoginPage = () => {
     return(
         <Container>
-            <SignInForm title="로그인"/>
+            <LogInForm title="로그인"/>
             <p>
                 계정이 없습니까? <StyledLink to={"/register"}>가입하기</StyledLink>
             </p>

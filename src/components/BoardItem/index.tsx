@@ -28,32 +28,35 @@ const UserName = styled.div`
     width: 30%;
     text-align: right;
 `;
+const CreateAt = styled.div`
 
+`;
 const Hr = styled.hr`
     backgound-color: black;
     width: 90%;
 `;
 
 interface Item {
-    readonly id: string;
+    readonly num: number;
     readonly title: string;
-    readonly body: string;
     readonly userName: string;
+    readonly createAt: string;
 }
 
-export const BoardItem = ({id, title, userName}: Item) => {
+export const BoardItem = ({num, title, userName, createAt}: Item) => {
     const nav = useNavigate()
     const writeContext = useContext(WriteContext);
     const onClick = () => {
-        writeContext.storeId(id)
+        writeContext.storeNum(num)
         nav('/detail')
     }
     return(
         <>
             <Container onClick={onClick}>
-                <Id>{id}</Id>
+                <Id>{num}</Id>
                 <Title>{title}</Title>
                 <UserName>{userName}</UserName>
+                <CreateAt>{createAt}</CreateAt>
             </Container>
             <Hr/>
         </>

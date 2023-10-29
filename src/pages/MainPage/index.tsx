@@ -1,13 +1,5 @@
 import styled from "@emotion/styled";
-import { Graph } from 'components/Graph';
-import { BlurGraph } from 'components/Graph/BlurGraph';
-import { Test } from 'components/Graph/test'
-import { useEffect, useState } from 'react';
-import { NoticeBoard } from 'components/Board/NoticeBoard';
-import { ComuBoard } from 'components/Board/ComuBoard';
-import { Link, useNavigate } from 'react-router-dom';
-import { MiniNotice } from 'components/MiniBoard/MiniNotice'
-import { MiniComu } from 'components/MiniBoard/MiniComu';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Fade } from '@mui/material';
 
 const Container = styled.div`
@@ -15,14 +7,15 @@ const Container = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 5%;
+    font-family: 'TAEBAEKfont';
+    background-image: url('/image/mainBackground2.png');
+    background-size: cover;
 `;
 const NavImage = styled.div`
     display: flex;
-    background-image: url('/image/mainBackground.jpg');
-    background-size: cover;
     width: 95%;
     height: 35rem;
+    margin: 5% 0;
     position: relative;
 `;
 const HoverText = styled.div`
@@ -30,7 +23,6 @@ const HoverText = styled.div`
     font-size: 1rem;
     font-weight: bold;
     text-align: center;
-    font-family: 'ONE-Mobile-POP';
 `;
 const Image = styled.img`
     width: 12rem;
@@ -102,7 +94,7 @@ export const MainPage = () => {
                 </ImageSet2>
                 <ImageSet3>
                     <HoverText>공지 사항</HoverText>
-                    <Fade appear in timeout={4000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
+                    <Fade appear in timeout={1000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
                 </ImageSet3>
                 <ImageSet4>
                     <HoverText>자유 게시판</HoverText>

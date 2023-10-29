@@ -15,10 +15,11 @@ const Container = styled.form`
     justify-content: center;
     align-items: center;
     border-radius: 4px;
-    border: 1px solid black;
+    border: 1px solid lightgray;
     box-shadow: 5px 5px 5px 5px lightgray;
     width: 50%;
     margin-bottom: 2rem;
+    background-color: rgba(255, 255, 255, 0.7);
 `;
 const H1 = styled.h1`
     margin-top: 5%;
@@ -39,10 +40,9 @@ const ErrorMessage = styled.div`
     border-radius: 4px;
     color: #ffffff;
     font-size: 16px;
-    width: 90%;
+    width: 96%;
     padding: 4px;
     margin: 8px;
-    
 `;
 
 interface Props{
@@ -53,7 +53,7 @@ interface FormValue {
     password: string
 }
 
-export const SignInForm = ({title}: Props) => {
+export const LogInForm = ({title}: Props) => {
 // react-form-hook 
     const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
         mode: 'onChange'
@@ -89,35 +89,17 @@ export const SignInForm = ({title}: Props) => {
             console.error(error);
         });
     }
-// email 유효성 검사 조건
-    const userEmail = {
-        required: "필수 필드입니다.",
-    }
-// password 유효성 검사 조건
-    const userPassword = {
-        required: "필수 필드입니다.",
-        minLength: {
-            value: 4,
-            message: "최소 4자입니다.",
-        },
-        maxLength: {
-            value: 13,
-            message: "최대 13자입니다.",
-        },
-    };
 
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>
             <H1>{title}</H1>
             <InputSet>
-                <FloatingLabel controlId="floatingInput" label="Email address" className="mb-3">
-                    <Form.Control type="email" placeholder="name@example.com" {...register("email", userEmail)} />
+                <FloatingLabel controlId="floatingInput" label="Email address" className='mb-3'>
+                    <Form.Control type="email" placeholder="name@example.com" {...register("email")} />
                 </FloatingLabel>
-                {errors?.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
-                <FloatingLabel controlId="floatingPassword" label="Password" >
-                    <Form.Control type="password" placeholder="Password" {...register("password", userPassword)} />
+                <FloatingLabel controlId="floatingPassword" label="Password" className='mb-3'>
+                    <Form.Control type="password" placeholder="Password" {...register("password")} />
                 </FloatingLabel>
-                {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
             </InputSet>
             <Button label={title}></Button>
         </Container>

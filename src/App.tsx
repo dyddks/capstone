@@ -7,15 +7,13 @@ import { Routes, Route, Link} from 'react-router-dom'
 import { MainPage } from 'pages/MainPage';
 import { LoginPage } from 'pages/LoginPage';
 import { Layout } from 'components/Layout';
-import { SignUpPage } from 'pages/SignUpPage';
-import { UpdatePage } from 'pages/UpdatePage';
-import { DeletePage } from 'pages/DelUserInfoPage';
+import { SignUpPage } from 'pages/RegisterPage';
 import { InfoPage } from 'pages/InfoPage';
 import { NoticePage } from 'pages/NoticePage';
 import { ComuPage } from 'pages/ComuPage';
 import { DetailPage } from 'pages/DetailPage'
 import { WritePage } from 'pages/WritePage';
-import { UserPage } from 'pages/UserPage';
+import { MyPage } from 'pages/MyPage';
 
 function App() {
   return (
@@ -24,9 +22,7 @@ function App() {
         <Route path='/' element={<MainPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/register' element={<SignUpPage />} />
-        <Route path='/update' element={<UpdatePage/>} />
-        <Route path='/mypage' element={<UserPage/>} />
-        <Route path='/delete' element={<DeletePage/>} />
+        <Route path='/mypage' element={<MyPage/>} />
         <Route path='/info' element={<InfoPage/>} />
         <Route path='/notice' element={<NoticePage/>} />
         <Route path='/community' element={<ComuPage/>} />

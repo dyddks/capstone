@@ -1,22 +1,17 @@
 import styled from '@emotion/styled';
 
 const Container = styled.button`
-    border: 2px solid black;
-    color: #000000;
-    background-color: ${(props) => props.color};
+    border: none;
+    color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
-    padding: 8px 16px;
     margin: 1rem;
-    border-radius: 8px;
-    font-family: 'ONE-Mobile-POP';
-
-    &:hover{
-        background-color: ${(props) => props.color};
-        opacity: 0.5;
-    }
+    font-family: 'Pretendard-Regular';
+    font-weight: 900;
+    font-size: 1.2rem;
     
-    &:active{
-        box-shadow: inset 5px 5px 10px rgba(0,0,0,0.2);
+    &:hover{
+        opacity: 0.5;
     }
 `;
 
