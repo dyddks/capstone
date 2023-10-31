@@ -83,14 +83,15 @@ export const WritePage = () => {
     })
 
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-        const Data = {
-            id: postId,
-            userId: sessionStorage.getItem('id'),
-            title: data.title,
-            content: data.content
-        }
-        const {id ,userId, title, content} = Data;
+        
         if(location.state !== null){
+            const Data = {
+                id: postId,
+                user_id: sessionStorage.getItem('id'),
+                title: data.title,
+                content: data.content
+            }
+            const {id ,user_id, title, content} = Data;
             if (title === '') {
                 alert('제목을 입력해 주세요')
             } else if (content === '') {
@@ -102,7 +103,7 @@ export const WritePage = () => {
                         id,
                         title,
                         content,
-                        userId,
+                        user_id,
                     }),
                     headers: {
                         'Content-type': 'application/json; charset=UTF-8',
@@ -118,6 +119,12 @@ export const WritePage = () => {
                 nav('/community')
             }
         } else {
+            const Data = {
+                userId: sessionStorage.getItem('id'),
+                title: data.title,
+                content: data.content
+            }
+            const {userId, title, content} = Data;
             if(title === ''){
                 alert('제목을 입력해 주세요')
             }else if(content === ''){

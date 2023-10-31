@@ -1,9 +1,9 @@
 import styled from '@emotion/styled';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { WriteContext } from 'context/WriteContext/writeContext'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-const Container = styled.form`
+const Container = styled.div`
     display: flex;
     flex-direction: column;
     margin: 5% 0;
@@ -66,11 +66,9 @@ const DeleteBtn = styled.button`
 const ModifyBtn = styled.button`
 
 `;
-interface Props {
-    readonly num: number;
-}
+
 export const PostDetail = () => {
-    const [id, setId] = useState('');
+    const [postId, setPostId] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [userName, setUserName] = useState('');
@@ -78,11 +76,11 @@ export const PostDetail = () => {
     const nav = useNavigate();
     const location = useLocation();
 
-
-    fetch(`board/${location.state}`) //서버에서 상세게시글 받아오기
+    useEffect(() => {
+        fetch(`board/${location.state}`) //서버에서 상세게시글 받아오기
         .then(Response => Response.json())
         .then((json) => {
-            setId(json.id);
+            setPostId(json.id);
             setTitle(json.title);
             setContent(json.content);
             setUserName(json.name);
@@ -91,19 +89,26 @@ export const PostDetail = () => {
         .catch((error) => {
             console.error(error);
         });
+    })
+    
     const deletePost = () =>{ // 게시글 삭제
-        const user_Id = sessionStorage.getItem('id');
-        
+        const Data = {
+            id: postId,
+            user_id: sessionStorage.getItem('id'),
+        }
+        const {id, user_id} = Data;
         fetch("/board/delete", {
             method: 'DELETE',
             body: JSON.stringify({
                 id,
-                user_Id
+                user_id
             }),
             headers: {
-                'Contesnt-type': 'application/json; charset=UTF-8',
+                'Content-type': 'application/json; charset=UTF-8',
             },
         })
+        .then(Response => Response.json())
+        .then((json) => console.log(json))
         .catch((error) => {
             console.error(error);
         });
@@ -111,7 +116,7 @@ export const PostDetail = () => {
         nav('/Community');
     }
     const modifyPost = () => { // 게시글 수정
-        nav('/write' ,{ state: { title: title, content: content, id: id}});
+        nav('/write' ,{ state: { title: title, content: content, id: postId}});
     }
 
     return(
