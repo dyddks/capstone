@@ -44,11 +44,9 @@ interface Item {
 }
 
 export const BoardItem = ({num, title, userName, createAt}: Item) => {
-    const nav = useNavigate()
-    const writeContext = useContext(WriteContext);
+    const nav = useNavigate();
     const onClick = () => {
-        writeContext.storeNum(num)
-        nav('/detail')
+        nav('/detail', {state: num});
     }
     return(
         <>
@@ -56,7 +54,7 @@ export const BoardItem = ({num, title, userName, createAt}: Item) => {
                 <Id>{num}</Id>
                 <Title>{title}</Title>
                 <UserName>{userName}</UserName>
-                <CreateAt>{createAt}</CreateAt>
+                
             </Container>
             <Hr/>
         </>

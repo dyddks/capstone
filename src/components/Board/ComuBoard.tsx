@@ -28,29 +28,28 @@ interface Item {
 
 export const ComuBoard = () => {
     const [items, setItems] = useState<ReadonlyArray<Item>>([]);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage, setCurrentPage] = useState(0);
     const [ totalPage, setTotalPage ] = useState(1);
-    const itemsPerPage = 10;
-    const totalPages = Math.ceil(items.length / itemsPerPage);
     
     const handleClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
 
     useEffect(() => {
-        fetch("/board/list") //서버에서 게시물 리스트 받아오기
+        fetch(`/board/list?page=${currentPage}`) //서버에서 게시물 리스트 받아오기
         .then(Response => Response.json())
-        .then((json) => setItems(json))
-        .then((json) => console.log(json))
+        .then((json) => {
+            setItems(json.content)
+        })
         .catch((error) => {
             console.error(error);
         });
-    }, []);
+    }, [currentPage]);
 
     return(
         <Container>
-            {/* {items.map((item) => (<BoardItem key={item.num} num={item.num} title={item.title} userName={item.userName} createAt={item.createdAt}></BoardItem>))}
-            <div>
+            {items.map((item) => (<BoardItem key={item.num} num={item.num} title={item.title} userName={item.userName} createAt={item.createdAt}></BoardItem>))}
+            {/* <div>
             {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (pageNumber) => (
                 <PageButton

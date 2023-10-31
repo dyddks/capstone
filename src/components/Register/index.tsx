@@ -77,10 +77,8 @@ export const RegisterForm = ({title}: Props) => {
         })
         .then(Response => Response.json())
         .then((json) => {
-            
             if(json.id === "이미 가입된 이메일입니다."){
                 alert(json.id);
-                
             }else {
                 alert("회원가입을 축하합니다.");
                 nav('/');

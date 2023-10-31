@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useContext, useState } from 'react';
 import { WriteContext } from 'context/WriteContext/writeContext'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Container = styled.form`
     display: flex;
@@ -66,25 +66,27 @@ const DeleteBtn = styled.button`
 const ModifyBtn = styled.button`
 
 `;
-
+interface Props {
+    readonly num: number;
+}
 export const PostDetail = () => {
-    const [id, setId] = useState(0);
-    const [title, setTitle] = useState('리액트 개어렵네');
-    const [content, setContent] = useState('ㅈㄱㄴ');
-    const [userName, setUserName] = useState('정용안');
-    const [createAt, setCreateAt] = useState('2023-10-14');
-    const writeContext = useContext(WriteContext);
-    const num = writeContext.num;
+    const [id, setId] = useState('');
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
+    const [userName, setUserName] = useState('');
+    const [createAt, setCreateAt] = useState('');
     const nav = useNavigate();
+    const location = useLocation();
 
-    fetch(`board/${num}`) //서버에서 상세게시글 받아오기
+
+    fetch(`board/${location.state}`) //서버에서 상세게시글 받아오기
         .then(Response => Response.json())
         .then((json) => {
             setId(json.id);
             setTitle(json.title);
             setContent(json.content);
-            setUserName(json.userName);
-            setCreateAt(json.createAt);
+            setUserName(json.name);
+            setCreateAt(json.createdAt);
         })
         .catch((error) => {
             console.error(error);
@@ -109,10 +111,7 @@ export const PostDetail = () => {
         nav('/Community');
     }
     const modifyPost = () => { // 게시글 수정
-        writeContext.storeValue(1);
-        writeContext.storeTitle(title);
-        writeContext.storeContent(content);
-        nav('/write');
+        nav('/write' ,{ state: { title: title, content: content, id: id}});
     }
 
     return(

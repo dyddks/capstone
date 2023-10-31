@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from 'components/Button';
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useContext, useState } from 'react';
 import { WriteContext } from 'context/WriteContext/writeContext';
@@ -66,48 +66,83 @@ interface FormValue {
 
 export const WritePage = () => {
     const nav = useNavigate();
-    const writeContext = useContext(WriteContext);
+    const location = useLocation();
+    const [postId, setPostId] = useState('');
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const { register, handleSubmit, formState: {errors}, reset } = useForm<FormValue>({
-        mode: 'onSubmit'
+        mode: 'onChange'
     });
 
     useEffect(() => {
-        if(writeContext.value === 1){
-            setTitle(writeContext.title);
-            setContent(writeContext.content);
+        if (location.state !== null) {
+            setTitle(location.state.title);
+            setContent(location.state.content);
+            setPostId(location.state.id);
         }
     })
 
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
         const Data = {
-            user_Id: sessionStorage.getItem('id'),
+            id: postId,
+            userId: sessionStorage.getItem('id'),
             title: data.title,
             content: data.content
-        } ;
-        const {user_Id, title, content} = Data
-        if(title === null){
-            alert('제목을 입력해 주세요')
-        }else if(content === null){
-            alert('내용을 입력해 주세요')
-        }else{
-            fetch("/board/write", {
-                method: 'POST',
-                body: JSON.stringify({
-                    user_Id,
-                    title,
-                    content
-                }),
-                headers: {
-                    'Contesnt-type': 'application/json; charset=UTF-8',
-                },
-            })
-            .catch((error) => {
-                console.error(error);
-            });
-            alert('게시글이 등록되었습니다.')
-            nav('/community')
+        }
+        const {id ,userId, title, content} = Data;
+        if(location.state !== null){
+            if (title === '') {
+                alert('제목을 입력해 주세요')
+            } else if (content === '') {
+                alert('내용을 입력해 주세요')
+            } else {
+                fetch("/board/update", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        id,
+                        title,
+                        content,
+                        userId,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                .then(Response => Response.json())
+                .then((json) => console.log(json))
+                .catch((error) => {
+                    console.error(error);
+                });
+                console.log(Data)
+                alert('게시글이 수정되었습니다.')
+                nav('/community')
+            }
+        } else {
+            if(title === ''){
+                alert('제목을 입력해 주세요')
+            }else if(content === ''){
+                alert('내용을 입력해 주세요')
+            }else{
+                fetch("/board/write", {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title,
+                        content,
+                        userId,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                .then(Response => Response.json())
+                .then((json) => console.log(json))
+                .catch((error) => {
+                    console.error(error);
+                });
+                console.log(Data)
+                alert('게시글이 등록되었습니다.')
+                nav('/community')
+            }
         }
     }
     return(
@@ -115,8 +150,8 @@ export const WritePage = () => {
             <Div>자유게시판</Div>
             <Label>게시글 작성</Label>
             <Hr/>
-            <Title id='title' placeholder='제목을 입력해 주세요' value={title}{...register("title")}/>
-            <Body id='body' placeholder='내용을 입력해 주세요' maxLength={500} value={content} {...register("content")}/>
+            <Title placeholder='제목을 입력해 주세요' defaultValue={title} {...register("title")}/>
+            <Body placeholder='내용을 입력해 주세요' maxLength={500} defaultValue={content} {...register("content")}/>
             <Button label='등록'></Button>
             <StyledLink to='/community'>뒤로가기</StyledLink>
         </Container>

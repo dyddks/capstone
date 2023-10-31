@@ -10,12 +10,7 @@ const Container = styled.div`
     font-family: 'TAEBAEKfont';
     background-image: url('/image/mainBackground2.png');
     background-size: cover;
-`;
-const NavImage = styled.div`
-    display: flex;
-    width: 95%;
-    height: 35rem;
-    margin: 5% 0;
+    width: 100%;
     position: relative;
 `;
 const HoverText = styled.div`
@@ -25,8 +20,8 @@ const HoverText = styled.div`
     text-align: center;
 `;
 const Image = styled.img`
-    width: 12rem;
-    height: 12rem;
+    max-width: 12rem;
+    max-height: 12rem;
 `;
 const ImageSet1 = styled.div`
     display: flex;
@@ -56,7 +51,6 @@ const ImageSet3 = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    
     left: 63%;
 
     :hover {
@@ -82,26 +76,22 @@ export const MainPage = () => {
     
     return(
         <Container>
-            <Fade appear in timeout={4000}>
-            <NavImage>
-                <ImageSet1>
-                    <HoverText>가스 사용량 예측</HoverText>
-                    <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => nav('/analysis')}/></Fade>
-                </ImageSet1>
-                <ImageSet2>
-                    <HoverText>마이 페이지</HoverText>
-                    <Fade appear in timeout={4000}><Image src={'./image/002.png'} onClick={() =>{sessionStorage.getItem('id') !== null ? nav('/mypage') : nav('/login')}}/></Fade>
-                </ImageSet2>
-                <ImageSet3>
-                    <HoverText>공지 사항</HoverText>
-                    <Fade appear in timeout={1000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
-                </ImageSet3>
-                <ImageSet4>
-                    <HoverText>자유 게시판</HoverText>
-                    <Fade appear in timeout={4000}><Image src={'./image/004.png'} onClick={() => nav('/community')}/></Fade>
-                </ImageSet4>
-            </NavImage>
-            </Fade>
+            <ImageSet1>
+                <HoverText>가스 사용량 예측</HoverText>
+                <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => nav('/analysis')}/></Fade>
+            </ImageSet1>
+            <ImageSet2>
+                <HoverText>마이 페이지</HoverText>
+                <Fade appear in timeout={4000}><Image src={'./image/002.png'} onClick={() =>{sessionStorage.getItem('id') !== null ? nav('/mypage') : nav('/login')}}/></Fade>
+            </ImageSet2>
+            <ImageSet3>
+                <HoverText>공지 사항</HoverText>
+                <Fade appear in timeout={1000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
+            </ImageSet3>
+            <ImageSet4>
+                <HoverText>자유 게시판</HoverText>
+                <Fade appear in timeout={4000}><Image src={'./image/004.png'} onClick={() => nav('/community')}/></Fade>
+            </ImageSet4>
         </Container>
     );
 };
