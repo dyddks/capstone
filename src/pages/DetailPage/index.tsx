@@ -12,14 +12,21 @@ const Container = styled.div`
     height: auto;
     width: 100%;
 `;
+const Button = styled.button`
+    width: 10%;
+    border-radius: 4px;
 
+    :hover {
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+    }
+`;
 export const DetailPage = () => {
     const nav = useNavigate();
     return(
         <Container>
             <PostDetail/>
             <Comment/>
-            <button onClick={() => nav(-1)}>목록으로</button>
+            <Button onClick={() => nav(-1)}>목록으로</Button>
         </Container>
     );
 };

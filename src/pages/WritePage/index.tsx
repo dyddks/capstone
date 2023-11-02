@@ -57,6 +57,16 @@ const StyledLink = styled(Link)`
         text-decoration: underline;
     }
 `;
+const Button1 = styled.button`
+    padding: 8px 12px;
+    border-radius: 4px;
+    margin-left: 80%;
+    margin-bottom: 5%;
+    
+    :hover {
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+    }
+`;
 
 interface FormValue {
     readonly title: string;
@@ -82,7 +92,6 @@ export const WritePage = () => {
     })
 
     const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-        
         if(location.state !== null){
             const Data = {
                 id: postId,
@@ -141,7 +150,6 @@ export const WritePage = () => {
                     },
                 })
                 .then(Response => Response.json())
-                .then((json) => console.log(json))
                 .catch((error) => {
                     console.error(error);
                 });
@@ -159,7 +167,7 @@ export const WritePage = () => {
             <Title placeholder='제목을 입력해 주세요' defaultValue={title} {...register("title")}/>
             <Body placeholder='내용을 입력해 주세요' maxLength={500} defaultValue={content} {...register("content")}/>
             <Button label='등록'></Button>
-            <StyledLink to='/community'>뒤로가기</StyledLink>
+            <Button1 onClick={() => nav('/community')}>뒤로가기</Button1>
         </Container>
     );
 };

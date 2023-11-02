@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { ComuBoard } from 'components/Board/ComuBoard'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
 const Container = styled.div`
     display: flex;
     flex-direction: column;
@@ -28,21 +29,19 @@ const Hr = styled.hr`
     color: black;
     width: 90%;
 `;
-const StyledLink = styled(Link)`
-    margin-left: 85%;
-    text-decoration: none;
-    color: black;
-    background-color: lightgray;
-    border: 1px solid black;
+const Button = styled.button`
+    padding: 8px 12px;
     border-radius: 4px;
-    padding: 3px;
+    margin-left: 85%;
+    margin-bottom: 5%;
 
-    :hover{
-        text-decoration: underline;
+    :hover {
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
     }
 `;
 
 export const ComuPage = () => {
+    const nav = useNavigate();
     return(
         <Container>
             <Title>
@@ -51,7 +50,7 @@ export const ComuPage = () => {
             </Title>
             <Hr/>
             <ComuBoard/>
-            <StyledLink to={sessionStorage.getItem('id') != null ? '/write' : '/login'}>글쓰기</StyledLink>
+            <Button onClick={() => {sessionStorage.getItem('id') != null ? nav('/write') : nav('/login')}}>글쓰기</Button>
         </Container>
     )
 }

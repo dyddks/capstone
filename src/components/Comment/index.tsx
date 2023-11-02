@@ -18,9 +18,7 @@ const Input = styled.input`
 `;
 const Button = styled.button`
     width: 10%;
-    border: 1px solid black;
     border-radius: 4px;
-    background-color: #eeeeee;
 
     :hover {
         box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;

@@ -61,10 +61,20 @@ const BtnSet = styled.div`
     margin-top: 1rem;
 `;
 const DeleteBtn = styled.button`
-    
+    width: 10%;
+    border-radius: 4px;
+
+    :hover {
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+    }
 `;
 const ModifyBtn = styled.button`
+    width: 10%;
+    border-radius: 4px;
 
+    :hover {
+        box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+    }
 `;
 
 export const PostDetail = () => {
@@ -108,7 +118,6 @@ export const PostDetail = () => {
             },
         })
         .then(Response => Response.json())
-        .then((json) => console.log(json))
         .catch((error) => {
             console.error(error);
         });

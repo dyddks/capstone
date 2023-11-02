@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { BoardItem } from 'components/BoardItem';
-import { Link } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;
@@ -41,7 +40,6 @@ export const ComuBoard = () => {
         .then((json) => {
             setItems(json.content);
             setTotalPage(json.totalPages);
-            console.log(json)
         })
         .catch((error) => {
             console.error(error);
