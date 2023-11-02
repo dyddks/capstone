@@ -29,7 +29,7 @@ interface Item {
 export const ComuBoard = () => {
     const [items, setItems] = useState<ReadonlyArray<Item>>([]);
     const [currentPage, setCurrentPage] = useState(0);
-    const [ totalPage, setTotalPage ] = useState(1);
+    const [ totalPage, setTotalPage ] = useState(0);
     
     const handleClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
@@ -39,7 +39,9 @@ export const ComuBoard = () => {
         fetch(`/board/list?page=${currentPage}`) //서버에서 게시물 리스트 받아오기
         .then(Response => Response.json())
         .then((json) => {
-            setItems(json.content)
+            setItems(json.content);
+            setTotalPage(json.totalPages);
+            console.log(json)
         })
         .catch((error) => {
             console.error(error);
@@ -49,19 +51,19 @@ export const ComuBoard = () => {
     return(
         <Container>
             {items.map((item) => (<BoardItem key={item.num} num={item.num} title={item.title} userName={item.userName} createAt={item.createdAt}></BoardItem>))}
-            {/* <div>
-            {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            <div>
+            {Array.from({ length: totalPage }, (_, index) => index).map(
             (pageNumber) => (
                 <PageButton
                 key={pageNumber}
                 onClick={() => handleClick(pageNumber)}
                 disabled={pageNumber === currentPage}
                 >
-                {pageNumber}
+                {pageNumber+1}
                 </PageButton>
             )
             )}
-            </div> */}
+            </div>
         </Container>
     );
 };

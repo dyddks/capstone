@@ -12,7 +12,6 @@ const Container = styled.div`
     height: 100%;
     width: 100%;
     min-width: 1200px;
-    background-image: url('/image/backgroundColor.png');
 `;
 export const Layout = () => {
     const location = useLocation();

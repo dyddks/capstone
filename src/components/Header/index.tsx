@@ -43,20 +43,22 @@ export const Header = () => {
     }
     const navChange = () => {
         if(sessionStorage.getItem('id') !== null){
-            return(<Link to='/update'><Button label='회원정보수정'/></Link>)
+            return(<Link to='/mypage'><Button label='마이페이지'/></Link>)
         }else{
             return(<Link to='/register'><Button label='회원가입'/></Link>)
         }
     }
     return(
+        <>
         <Container>
             <Title to ='/'>Capston</Title>
             {location.pathname !== '/' ? <Navigator/> : ''}
             <Nav>
-                {/* {localStorage.getItem('email') && <Name>{localStorage.getItem('email')}님 환영합니다.</Name>} */}
                 <Button label={login} onClick={logOut}/>
                 {navChange()}
             </Nav>
         </Container>
+        <hr/>
+        </>
     );
 };

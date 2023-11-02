@@ -1,7 +1,4 @@
 import styled from '@emotion/styled';
-import { WriteContext } from 'context/WriteContext/writeContext';
-import { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     display: flex;

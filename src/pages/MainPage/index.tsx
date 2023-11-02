@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Fade } from '@mui/material';
 
 const Container = styled.div`
@@ -8,10 +8,19 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     font-family: 'TAEBAEKfont';
-    background-image: url('/image/mainBackground2.png');
+    margin-top: 5%;
+
+    @media (max-width: 768px) {
+        
+    }
+`;
+const NavImage = styled.div`
+    position: relative;
+    background: url('/image/mainBackground1.png') no-repeat;
     background-size: cover;
     width: 100%;
-    position: relative;
+    height: 700px;
+    max-width: 1300px;
 `;
 const HoverText = styled.div`
     height: 1rem;
@@ -27,8 +36,8 @@ const ImageSet1 = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 15%;
-    left: 5%;
+    top: calc(50% - 15%);
+    left: calc(50% - 40%);
 
     :hover {
         transform: scale(1.2);
@@ -39,8 +48,8 @@ const ImageSet2 = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 37%;
-    left: 35%;
+    top: calc(50% - 15%);
+    left: calc(50% - 10%);
 
     :hover {
         transform: scale(1.2);
@@ -51,7 +60,8 @@ const ImageSet3 = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    left: 63%;
+    top: calc(50% - 50%);
+    right: calc(50% - 33%);
 
     :hover {
         transform: scale(1.2);
@@ -62,8 +72,8 @@ const ImageSet4 = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
-    top: 48%;
-    left: 58%;
+    top: calc(50% - 0%);
+    right: calc(50% - 20%);
 
     :hover {
         transform: scale(1.2);
@@ -76,22 +86,24 @@ export const MainPage = () => {
     
     return(
         <Container>
-            <ImageSet1>
-                <HoverText>가스 사용량 예측</HoverText>
-                <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => nav('/analysis')}/></Fade>
-            </ImageSet1>
-            <ImageSet2>
-                <HoverText>마이 페이지</HoverText>
-                <Fade appear in timeout={4000}><Image src={'./image/002.png'} onClick={() =>{sessionStorage.getItem('id') !== null ? nav('/mypage') : nav('/login')}}/></Fade>
-            </ImageSet2>
-            <ImageSet3>
-                <HoverText>공지 사항</HoverText>
-                <Fade appear in timeout={1000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
-            </ImageSet3>
-            <ImageSet4>
-                <HoverText>자유 게시판</HoverText>
-                <Fade appear in timeout={4000}><Image src={'./image/004.png'} onClick={() => nav('/community')}/></Fade>
-            </ImageSet4>
+            <NavImage>
+                <ImageSet1>
+                    <HoverText>가스 사용량 예측</HoverText>
+                    <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => nav('/analysis')}/></Fade>
+                </ImageSet1>
+                <ImageSet2>
+                    <HoverText>마이 페이지</HoverText>
+                    <Fade appear in timeout={4000}><Image src={'./image/002.png'} onClick={() =>{sessionStorage.getItem('id') !== null ? nav('/mypage') : nav('/login')}}/></Fade>
+                </ImageSet2>
+                <ImageSet3>
+                    <HoverText>공지 사항</HoverText>
+                    <Fade appear in timeout={1000}><Image src={'./image/003.png'} onClick={() => nav('/notice')}/></Fade>
+                </ImageSet3>
+                <ImageSet4>
+                    <HoverText>자유 게시판</HoverText>
+                    <Fade appear in timeout={4000}><Image src={'./image/004.png'} onClick={() => nav('/community')}/></Fade>
+                </ImageSet4>
+            </NavImage>
         </Container>
     );
 };

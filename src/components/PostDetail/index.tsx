@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
-import { useContext, useEffect, useState } from 'react';
-import { WriteContext } from 'context/WriteContext/writeContext'
+import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import moment from 'moment';
 
 const Container = styled.div`
     display: flex;
@@ -84,7 +84,7 @@ export const PostDetail = () => {
             setTitle(json.title);
             setContent(json.content);
             setUserName(json.name);
-            setCreateAt(json.createdAt);
+            setCreateAt(moment(json.createdAt).format('YYYY년 MM월 DD일 HH:mm'));
         })
         .catch((error) => {
             console.error(error);

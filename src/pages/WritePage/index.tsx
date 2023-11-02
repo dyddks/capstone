@@ -3,8 +3,7 @@ import { Button } from 'components/Button';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import { useEffect, useContext, useState } from 'react';
-import { WriteContext } from 'context/WriteContext/writeContext';
+import { useEffect, useState } from 'react';
 
 const Container = styled.form`
     display: flex;
