@@ -14,6 +14,8 @@ import { ComuPage } from 'pages/ComuPage';
 import { DetailPage } from 'pages/DetailPage'
 import { WritePage } from 'pages/WritePage';
 import { MyPage } from 'pages/MyPage';
+import { AnalysisPage } from 'pages/AnalysisPage';
+import { ResultPage } from 'pages/AnalysisPage/ResultPage';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path='/mypage' element={<MyPage/>} />
         <Route path='/info' element={<InfoPage/>} />
         <Route path='/notice' element={<NoticePage/>} />
+        <Route path='/analysis' element={<AnalysisPage/>} />
+        <Route path='/result' element={<ResultPage/>} />
         <Route path='/community' element={<ComuPage/>} />
         <Route path='/detail' element={<DetailPage/>} />
         <Route path='/write' element={<WritePage/>} />

@@ -26,9 +26,7 @@ const UserName = styled.div`
     width: 30%;
     text-align: right;
 `;
-const CreateAt = styled.div`
 
-`;
 const Hr = styled.hr`
     backgound-color: black;
     width: 90%;
@@ -41,7 +39,7 @@ interface Item {
     readonly createAt: string;
 }
 
-export const BoardItem = ({num, title, userName, createAt}: Item) => {
+export const BoardItem = ({num, title, userName}: Item) => {
     const nav = useNavigate();
     const onClick = () => {
         nav('/detail', {state: num});
@@ -52,7 +50,6 @@ export const BoardItem = ({num, title, userName, createAt}: Item) => {
                 <Id>{num}</Id>
                 <Title>{title}</Title>
                 <UserName>{userName}</UserName>
-                
             </Container>
             <Hr/>
         </>

@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { Button } from "components/Button";
 import { Link } from 'react-router-dom';
+
 const Container = styled.div`
     display: flex;
 `;
+
 const Nav = styled(Link)`
     padding: 10px 30px;
     text-decoration: none;

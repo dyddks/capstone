@@ -3,11 +3,12 @@ import { ResponsiveLine } from '@nivo/line'
 import { useState } from 'react';
 
 const Container = styled.div`
-    border: 2px solid black;
+    border: 2px solid lightgray;
     border-radius: 16px;
     width: 500px;
     height: 300px;
     background-color: #fefefe;
+    margin: 5% 0;
 `;
 
 export const Graph = () => {
@@ -17,23 +18,23 @@ export const Graph = () => {
         "color": "hsl(24, 70%, 50%)",
         "data": [
             {
-                "x": "5월",
+                "x": "2023.5",
                 "y": 234
             },
             {
-                "x": "6월",
+                "x": "2023.6",
                 "y": 226
             },
             {
-                "x": "7월",
+                "x": "2023.7",
                 "y": 200
             },
             {
-                "x": "8월",
+                "x": "2023.8",
                 "y": 157
             },
             {
-                "x": "9월",
+                "x": "2023.9",
                 "y": 180
             },
             ]
