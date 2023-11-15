@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
-import { Graph } from 'components/Graph';
-import { MonthDropdown } from 'components/Dropdown/MonthDropdown';
-import { YearDropdown } from 'components/Dropdown/YearDropdown';
+import { DataInputSet } from 'components/DataInputSet';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { GasDataContext } from 'context/GasData/GasDataContext';
 
 const Container = styled.div`
   display: flex;
@@ -10,52 +10,78 @@ const Container = styled.div`
   align-items: center;
 `;
 
-const InputData = styled.div`
-  display: flex;
-  justify-content: space-around;
+const Title = styled.div`
+	position: relative;
+`;
+
+const Label = styled.span`
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	color: white;
+	font-size: 3rem;
+	font-weight: bold;
+	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+`;
+
+const Image = styled.img`
   width: 100%;
-  margin: 3% 0%;
+  opacity: 0.8;
+  filter: brightness(0.4);
 `;
 
-const Input = styled.input`
-  border: 1px solid gray;
-  border-radius: 4px;
-  width: 20%;
-  height: 1.8rem;
-`;
-
-const Span = styled.span`
-  font-weight: bold;
+const Hr = styled.hr`
+  color: black;
+  width: 90%;
 `;
 
 const Button = styled.button`
-  padding: 8px 12px;
+  width: 20%;
+  height: 3rem;
   border: 1px solid lightgray;
   border-radius: 4px;
+  margin: 5%;
 
   :hover {
-      box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
   }
 `;
 
 export const AnalysisPage = () => {
   const nav = useNavigate();
+  const gasDataContext = useContext(GasDataContext);
+  const currentDate = new Date();
+
+  const analysis = () => {
+    gasDataContext.updateData7({
+      year: currentDate.getFullYear(),
+      month: currentDate.getMonth(),
+      usage: (gasDataContext.data1.usage +
+      gasDataContext.data2.usage +
+      gasDataContext.data3.usage +
+      gasDataContext.data4.usage +
+      gasDataContext.data5.usage +
+      gasDataContext.data6.usage)/6
+    }
+      );
+    nav('/result');
+  }
 
   return(
     <Container>
-      <InputData>
-        <Span>1.</Span>
-        <MonthDropdown/>
-        <YearDropdown/>
-        <Input placeholder='사용량을 입력하세요'></Input>
-      </InputData>
-      <InputData>
-        <Span>2.</Span>
-        <MonthDropdown/>
-        <YearDropdown/>
-        <Input placeholder='사용량을 입력하세요'></Input>
-      </InputData>
-      <Button onClick={() => nav('/result')}>예측하기</Button>
+      <Title>
+        <Image src='./image/analysisBackground.png' alt="Description"/>
+        <Label>가스 사용량 예측</Label>
+      </Title>
+      <Hr/>
+      <DataInputSet num={1} store={(data) => gasDataContext.updateData1(data)}/>
+      <DataInputSet num={2} store={(data) => gasDataContext.updateData2(data)}/>
+      <DataInputSet num={3} store={(data) => gasDataContext.updateData3(data)}/>
+      <DataInputSet num={4} store={(data) => gasDataContext.updateData4(data)}/>
+      <DataInputSet num={5} store={(data) => gasDataContext.updateData5(data)}/>
+      <DataInputSet num={6} store={(data) => gasDataContext.updateData6(data)}/>
+      <Button onClick={analysis}>예측하기</Button>
     </Container>
   )
 }

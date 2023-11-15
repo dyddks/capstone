@@ -6,15 +6,18 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 import { UserDataContextProvider } from 'context/UserData/UserDataContext';
 import 'bootstrap/dist/css/bootstrap.css';
+import { GasDataContextProvider } from 'context/GasData/GasDataContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
+    <GasDataContextProvider>
     <UserDataContextProvider>
       <BrowserRouter>
         <App />
       </BrowserRouter>
     </UserDataContextProvider>
+    </GasDataContextProvider>
   </React.StrictMode>,
 );
 
