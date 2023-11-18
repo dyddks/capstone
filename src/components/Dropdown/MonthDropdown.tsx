@@ -2,14 +2,13 @@ import styled from '@emotion/styled';
 import { useState, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
-import { GasDataContext } from 'context/GasData/GasDataContext';
+import { DataListContext } from 'context/GasData/GasDataContext';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   border: 1px solid gray;
   border-radius: 4px;
-  width: 30%;
 `;
 
 const DropdownMenu = styled.select`

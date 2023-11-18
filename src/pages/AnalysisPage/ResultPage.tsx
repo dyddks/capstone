@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Graph } from 'components/Graph';
-import { GasDataContext } from 'context/GasData/GasDataContext';
+import { DataListContext } from 'context/GasData/GasDataContext';
 import { useContext } from 'react';
 
 const Container = styled.div`
@@ -17,11 +17,11 @@ const Text = styled.div`
 `;
 
 export const ResultPage = () => {
-  const gasDataContext = useContext(GasDataContext);
+  const gasDataContext = useContext(DataListContext);
 
   return(
     <Container>
-      <Text>분석결과 예상되는 이번달 가스 사용량은 {Math.round(gasDataContext.data7.usage)}입니다. </Text>
+      <Text>분석결과 예상되는 이번달 가스 사용량은 입니다. </Text>
       <Graph/>
     </Container>
   )

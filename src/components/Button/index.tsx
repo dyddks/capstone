@@ -5,7 +5,7 @@ const Container = styled.button`
     color: rgba(0, 0, 0, 0.6);
     background-color: rgba(0, 0, 0, 0);
     cursor: pointer;
-    margin: 1rem;
+    margin: 0 1rem;
     font-family: 'Pretendard-Regular';
     font-weight: 900;
     font-size: 1.2rem;

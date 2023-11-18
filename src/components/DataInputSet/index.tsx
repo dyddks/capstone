@@ -1,34 +1,36 @@
 import styled from '@emotion/styled';
 import { YearDropdown } from 'components/Dropdown/YearDropdown';
 import { MonthDropdown } from 'components/Dropdown/MonthDropdown';
-import { useContext, useEffect, useState } from 'react';
-import { GasDataContext } from 'context/GasData/GasDataContext';
+import { useContext, useState } from 'react';
+import { DataListContext } from 'context/GasData/GasDataContext';
+import { useForm, SubmitHandler } from "react-hook-form";
 
 const Container = styled.div`
   display: flex;
-  justify-content: space-around;
-  width: 100%;
-  margin: 3% 0%;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40%;
+  height: 100%;
 `;
 
 const Input = styled.input`
   border: 1px solid gray;
   border-radius: 4px;
-  width: 20%;
   height: 2rem;
 `;
+const Button = styled.button`
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  height: 2rem;
 
-const Span = styled.span`
-  font-weight: bold;
+  :hover {
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+  }
 `;
 
-interface Props {
-  readonly num: number;
-  readonly store: (data: any) => void;
-}
 
-export const DataInputSet = ({num, store}: Props) => {
-  const gasDataContext = useContext(GasDataContext);
+export const DataInputSet = () => {
+  const {DataList, onAdd} = useContext(DataListContext);
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(0);
   const [usage, setUsage] = useState(0);
@@ -41,12 +43,17 @@ export const DataInputSet = ({num, store}: Props) => {
     setYear(data);
   }
 
+  const onClick = () => {
+    const data = {year, month, usage};
+    onAdd(data);
+  }
+
   return(
     <Container>
-      <Span>{num}.</Span>
       <YearDropdown storeYear={storeYear}/>
       <MonthDropdown  storeMonth={storeMonth}/>
       <Input placeholder='사용량을 입력하세요' onChange={(e) => setUsage(Number(e.target.value))}></Input>
+      <Button onClick={onClick}>추가</Button>
     </Container>
   );
 }

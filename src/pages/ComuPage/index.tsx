@@ -11,6 +11,7 @@ const Container = styled.div`
 `;
 const Title = styled.div`
 	position: relative;
+	width: 100%;
 `;
 const Label = styled.span`
 	position: absolute;

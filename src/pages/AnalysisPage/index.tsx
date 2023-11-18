@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import { DataInputSet } from 'components/DataInputSet';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { GasDataContext } from 'context/GasData/GasDataContext';
+import { DataListContext } from 'context/GasData/GasDataContext';
+import { DataList } from 'components/DataList';
 
 const Container = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const Container = styled.div`
 
 const Title = styled.div`
 	position: relative;
+  width: 100%;
 `;
 
 const Label = styled.span`
@@ -35,6 +37,12 @@ const Hr = styled.hr`
   color: black;
   width: 90%;
 `;
+const AnalysisDataSet = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  height: 15rem;
+`;
 
 const Button = styled.button`
   width: 20%;
@@ -50,23 +58,7 @@ const Button = styled.button`
 
 export const AnalysisPage = () => {
   const nav = useNavigate();
-  const gasDataContext = useContext(GasDataContext);
-  const currentDate = new Date();
-
-  const analysis = () => {
-    gasDataContext.updateData7({
-      year: currentDate.getFullYear(),
-      month: currentDate.getMonth(),
-      usage: (gasDataContext.data1.usage +
-      gasDataContext.data2.usage +
-      gasDataContext.data3.usage +
-      gasDataContext.data4.usage +
-      gasDataContext.data5.usage +
-      gasDataContext.data6.usage)/6
-    }
-      );
-    nav('/result');
-  }
+  const dataListContext = useContext(DataListContext);
 
   return(
     <Container>
@@ -75,13 +67,11 @@ export const AnalysisPage = () => {
         <Label>가스 사용량 예측</Label>
       </Title>
       <Hr/>
-      <DataInputSet num={1} store={(data) => gasDataContext.updateData1(data)}/>
-      <DataInputSet num={2} store={(data) => gasDataContext.updateData2(data)}/>
-      <DataInputSet num={3} store={(data) => gasDataContext.updateData3(data)}/>
-      <DataInputSet num={4} store={(data) => gasDataContext.updateData4(data)}/>
-      <DataInputSet num={5} store={(data) => gasDataContext.updateData5(data)}/>
-      <DataInputSet num={6} store={(data) => gasDataContext.updateData6(data)}/>
-      <Button onClick={analysis}>예측하기</Button>
+      <AnalysisDataSet>
+        <DataInputSet/>
+        <DataList/>
+      </AnalysisDataSet>
+      <Button>예측하기</Button>
     </Container>
   )
 }

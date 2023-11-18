@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ResponsiveLine } from '@nivo/line'
-import { GasDataContext } from 'context/GasData/GasDataContext';
+import { DataListContext } from 'context/GasData/GasDataContext';
 import { useContext, useEffect, useState } from 'react';
 
 const Container = styled.div`
@@ -13,40 +13,13 @@ const Container = styled.div`
 `;
 
 export const Graph = () => {
-    const gasDataContext = useContext(GasDataContext);
+    const dataListContext = useContext(DataListContext);
     const data=[
         {
         "id": "japan",
         "color": "hsl(24, 70%, 50%)",
         "data": [
-            {
-                "x": `${gasDataContext.data1.year}.${gasDataContext.data1.month}`,
-                "y": gasDataContext.data1.usage
-            },
-            {
-                "x": `${gasDataContext.data2.year}.${gasDataContext.data2.month}`,
-                "y": gasDataContext.data2.usage
-            },
-            {
-                "x": `${gasDataContext.data3.year}.${gasDataContext.data3.month}`,
-                "y": gasDataContext.data3.usage
-            },
-            {
-                "x": `${gasDataContext.data4.year}.${gasDataContext.data4.month}`,
-                "y": gasDataContext.data4.usage
-            },
-            {
-                "x": `${gasDataContext.data5.year}.${gasDataContext.data5.month}`,
-                "y": gasDataContext.data5.usage
-            },
-            {
-                "x": `${gasDataContext.data6.year}.${gasDataContext.data6.month}`,
-                "y": gasDataContext.data6.usage
-            },
-            {
-                "x": `${gasDataContext.data7.year}.${gasDataContext.data7.month+1}(예측)`,
-                "y": gasDataContext.data7.usage
-            },
+            {}
             ]
         }]
 

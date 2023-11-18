@@ -10,6 +10,7 @@ const Container = styled.div`
 `;
 const Title = styled.div`
     position: relative;
+    width: 100%;
 `;
 const Label = styled.span`
     position: absolute;
@@ -33,8 +34,8 @@ export const NoticePage = () => {
     return(
         <Container>
             <Title>
-            <Image src='./image/NoticeBackground.png' alt="Description"/>
-            <Label>공지사항</Label>
+                <Image src='./image/NoticeBackground.png' alt="Description"/>
+                <Label>공지사항</Label>
             </Title>
             <Hr/>
             <NoticeBoard/>

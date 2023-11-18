@@ -3,16 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { Fade } from '@mui/material';
 
 const Container = styled.div`
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: 'TAEBAEKfont';
     margin-top: 5%;
-
-    @media (max-width: 768px) {
-        
-    }
 `;
 const NavImage = styled.div`
     position: relative;
@@ -89,7 +86,7 @@ export const MainPage = () => {
             <NavImage>
                 <ImageSet1>
                     <HoverText>가스 사용량 예측</HoverText>
-                    <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => nav('/analysis')}/></Fade>
+                    <Fade appear in timeout={1000}><Image src={'./image/001.png'} onClick={() => {sessionStorage.getItem('id') !== null ? nav('/analysis') : nav('/login')}}/></Fade>
                 </ImageSet1>
                 <ImageSet2>
                     <HoverText>마이 페이지</HoverText>

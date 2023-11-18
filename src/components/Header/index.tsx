@@ -6,7 +6,7 @@ import Navigator from 'components/Navigator';
 
 const Container = styled.div`
     display: flex;
-    padding: 16px 24px;
+    padding: 2rem 24px;
     decoration: none;
     justify-content: space-between;
     align-items: center;
