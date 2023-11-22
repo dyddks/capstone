@@ -4,6 +4,7 @@ import { Button } from 'components/Button';
 import { useContext } from 'react';
 import { UserDataContext } from 'context/UserData/UserDataContext';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.form`
   display: flex;
@@ -59,7 +60,7 @@ export const UnRegisterForm = () => {
   } = useForm<FormValue>({
     mode: 'onChange',
   });
-  const userDataContext = useContext(UserDataContext);
+
   // 유효성 통과 됬을때 submitHandler
   const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
     const Data = {
@@ -67,30 +68,23 @@ export const UnRegisterForm = () => {
       password: data.password,
     };
     const { id, password } = Data;
-    fetch('/user/delete', {
-      method: 'DELETE',
-      body: JSON.stringify({
+
+    axios.delete('/user/delete', {
+      data: {
         id,
         password,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+      }
     })
-      .then((Response) => Response.json())
-      .then((json) => {
-        if (json.state === 1) {
-          sessionStorage.removeItem('email');
-          sessionStorage.removeItem('id');
-          alert('회원탈퇴가 완료되었습니다.');
-          nav('/');
-        } else {
-          alert('비밀번호가 틀립니다.');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    .then((result) => {
+      if (result.data.state === 1) {
+        sessionStorage.removeItem('email');
+        sessionStorage.removeItem('id');
+        alert('회원탈퇴가 완료되었습니다.');
+        nav('/');
+      } else {
+        alert('비밀번호가 틀립니다.');
+      }
+    });
   };
   // password 유효성 검사 조건
   const userPassword = {

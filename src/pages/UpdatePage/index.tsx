@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import { UpdateForm } from 'components/Form/UpdateForm';
+import { UpdateForm } from 'components/UpdateForm/UpdateForm';
 
 const Container = styled.div`
   display: flex;

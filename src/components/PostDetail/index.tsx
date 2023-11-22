@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import moment from 'moment';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -87,18 +88,14 @@ export const PostDetail = () => {
   const location = useLocation();
 
   useEffect(() => {
-    fetch(`board/${location.state}`) //서버에서 상세게시글 받아오기
-      .then((Response) => Response.json())
-      .then((json) => {
-        setPostId(json.id);
-        setTitle(json.title);
-        setContent(json.content);
-        setUserName(json.name);
-        setCreateAt(moment(json.createdAt).format('YYYY년 MM월 DD일 HH:mm'));
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    axios.get(`board/${location.state}`)
+    .then((result) => {
+      setPostId(result.data.id);
+      setTitle(result.data.title);
+      setContent(result.data.content);
+      setUserName(result.data.name);
+      setCreateAt(moment(result.data.createdAt).format('YYYY년 MM월 DD일 HH:mm'));
+    })
   });
 
   const deletePost = () => {
@@ -108,23 +105,23 @@ export const PostDetail = () => {
       user_id: sessionStorage.getItem('id'),
     };
     const { id, user_id } = Data;
-    fetch('/board/delete', {
-      method: 'DELETE',
-      body: JSON.stringify({
+
+    axios.delete('/board/delete', {
+      data: {
         id,
         user_id,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+      }
     })
-      .then((Response) => Response.json())
-      .catch((error) => {
-        console.error(error);
-      });
-    alert('게시글이 삭제 되었습니다.');
-    nav('/Community');
+    .then(() => {
+      alert('게시글이 삭제 되었습니다.');
+      nav('/Community');
+    })
+    .catch((error) => {
+      console.log(error);
+      alert('잠시후 다시 시도해주세요.');
+    })
   };
+  
   const modifyPost = () => {
     // 게시글 수정
     nav('/write', { state: { title: title, content: content, id: postId } });

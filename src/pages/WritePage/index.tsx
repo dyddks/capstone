@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Container = styled.form`
   display: flex;
@@ -104,32 +105,27 @@ export const WritePage = () => {
         title: data.title,
         content: data.content,
       };
+      
       const { id, user_id, title, content } = Data;
       if (title === '') {
         alert('제목을 입력해 주세요');
       } else if (content === '') {
         alert('내용을 입력해 주세요');
       } else {
-        fetch('/board/update', {
-          method: 'POST',
-          body: JSON.stringify({
-            id,
-            title,
-            content,
-            user_id,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
+        axios.post('/board/update', {
+          id,
+          title,
+          content,
+          user_id,
         })
-          .then((Response) => Response.json())
-          .then((json) => console.log(json))
-          .catch((error) => {
-            console.error(error);
-          });
-        console.log(Data);
-        alert('게시글이 수정되었습니다.');
-        nav('/community');
+        .then(() => {
+          alert('게시글이 수정되었습니다.');
+          nav('/community');
+        })
+        .catch((errors) => {
+          console.error(errors);
+          alert('잠시후 다시 시도해주세요.');
+        });
       }
     } else {
       const Data = {
@@ -143,27 +139,23 @@ export const WritePage = () => {
       } else if (content === '') {
         alert('내용을 입력해 주세요');
       } else {
-        fetch('/board/write', {
-          method: 'POST',
-          body: JSON.stringify({
-            title,
+        axios.post('/board/write', {
+          title,
             content,
             userId,
-          }),
-          headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-          },
         })
-          .then((Response) => Response.json())
-          .catch((error) => {
-            console.error(error);
-          });
-        console.log(Data);
-        alert('게시글이 등록되었습니다.');
-        nav('/community');
+        .then(() => {
+          alert('게시글이 등록되었습니다.');
+          nav('/community');
+        })
+        .catch((error) => {
+          console.error(error);
+          alert('잠시후 다시 시도해 주세요.');
+        });
       }
     }
   };
+
   return (
     <Container onSubmit={handleSubmit(onSubmitHandler)}>
       <Div>자유게시판</Div>

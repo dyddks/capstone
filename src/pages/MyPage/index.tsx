@@ -3,7 +3,7 @@ import { Button } from 'components/Button';
 import { UserForm } from 'components/User';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { UpdateForm } from 'components/Form/UpdateForm';
+import { UpdateForm } from 'components/UpdateForm/UpdateForm';
 import { UnRegisterForm } from 'components/UnRegister';
 
 const Container = styled.div`

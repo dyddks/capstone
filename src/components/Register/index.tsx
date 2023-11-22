@@ -4,6 +4,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Button } from 'components/Button';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.form`
   display: flex;
@@ -67,30 +68,24 @@ export const RegisterForm = ({ title }: Props) => {
   // 유효성 통과 됬을때 submitHandler
   const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
     const { name, phone, email, password } = data;
-    fetch('/user/signup', {
-      method: 'POST',
-      body: JSON.stringify({
+    axios.post('/user/signup', {
         name,
         phone,
         email,
         password,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
     })
-      .then((Response) => Response.json())
-      .then((json) => {
-        if (json.id === '이미 가입된 이메일입니다.') {
-          alert(json.id);
-        } else {
-          alert('회원가입을 축하합니다.');
-          nav('/');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    .then((result) => {
+      if (result.data.id === '이미 가입된 이메일입니다.') {
+        alert(result.data.id);
+      } else {
+        alert('회원가입을 축하합니다.');
+        nav('/');
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert('잠시후 다시 시도해주세요.');
+    });
   };
   // 각 필드 유효성 검사 조건
   const userName = {

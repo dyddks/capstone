@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { BoardItem } from 'components/BoardItem';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -28,19 +29,24 @@ interface Item {
 
 export const NoticeBoard = () => {
   const [items, setItems] = useState<ReadonlyArray<Item>>([]);
-  const itemsPerPage = 10;
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = Math.ceil(items.length / itemsPerPage);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
 
   const handleClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
-    fetch(`board/list?page=${currentPage}`) //서버에서 공지사항 받아오기
-      .then((Response) => Response.json())
-      .then((json) => setItems(json))
-      .catch((error) => {
-        console.error(error);
-      });
   };
+
+  // useEffect(() => {
+  //   axios.get(`/board/list?page=${currentPage}`) //서버에서 공지사항 리스트 받아오기
+  //   .then((result) => {
+  //     setItems(result.data.content);
+  //     setTotalPage(result.data.totalPages);
+  //   })
+  //  .catch((error) => {
+  //    alert('현재 서비스를 이용할 수 없습니다.');
+  //    console.error(error);
+  //  });
+  // }, [currentPage]);
 
   return (
     <Container>
@@ -54,7 +60,7 @@ export const NoticeBoard = () => {
         ></BoardItem>
       ))}
       <div>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+        {Array.from({ length: totalPage }, (_, index) => index + 1).map((pageNumber) => (
           <PageButton
             key={pageNumber}
             onClick={() => handleClick(pageNumber)}

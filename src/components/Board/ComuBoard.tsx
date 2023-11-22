@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { useState, useEffect } from 'react';
 import { BoardItem } from 'components/BoardItem';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -40,15 +41,15 @@ export const ComuBoard = ({ userName }: Props) => {
 
   useEffect(() => {
     if (userName === '') {
-      fetch(`/board/list?page=${currentPage}`) //서버에서 게시물 리스트 받아오기
-        .then((Response) => Response.json())
-        .then((json) => {
-          setItems(json.content);
-          setTotalPage(json.totalPages);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
+      axios.get(`/board/list?page=${currentPage}`)//서버에서 게시물 리스트 받아오기
+      .then((result) => {
+        setItems(result.data.content);
+        setTotalPage(result.data.totalPages);
+      })
+      .catch((error) => {
+        alert('현재 서비스를 이용할 수 없습니다.');
+        console.error(error);
+      });
     }
 
     if (userName !== '') {
@@ -82,7 +83,7 @@ export const ComuBoard = ({ userName }: Props) => {
         ></BoardItem>
       ))}
       <div>
-        {Array.from({ length: items.length / 10 + 1 }, (_, index) => index).map((pageNumber) => (
+        {Array.from({ length: totalPage }, (_, index) => index).map((pageNumber) => (
           <PageButton
             key={pageNumber}
             onClick={() => handleClick(pageNumber)}

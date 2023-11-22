@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button } from 'components/Button';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -46,24 +47,39 @@ export const UpdateForm = () => {
       return;
     }
 
-    fetch('user/update', {
-      method: 'POST',
-      body: JSON.stringify({
-        id,
-        cerrentName,
-        password,
-        cerrentPhone,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+    axios.post('user/update', {
+      id,
+      cerrentName,
+      password,
+      cerrentPhone,
     })
-      .then((Response) => Response.json())
-      .then((json) => console.log(json))
-      .catch((error) => {
-        console.error(error);
-      });
-    alert('회원정보가 변경되었습니다.');
+    .then(() => {
+      // console.log(password);
+      alert('회원정보가 변경되었습니다.');
+    })
+    .catch((error) => {
+      console.error(error);
+      alert('잠시후 다시 시도해주세요.');
+    })
+
+    // fetch('user/update', {
+    //   method: 'POST',
+    //   body: JSON.stringify({
+    //     id,
+    //     cerrentName,
+    //     password,
+    //     cerrentPhone,
+    //   }),
+    //   headers: {
+    //     'Content-type': 'application/json; charset=UTF-8',
+    //   },
+    // })
+    //   .then((Response) => Response.json())
+    //   .then((json) => console.log(json))
+    //   .catch((error) => {
+    //     console.error(error);
+    //   });
+    // alert('회원정보가 변경되었습니다.');
   };
 
   const updateName = () => {
