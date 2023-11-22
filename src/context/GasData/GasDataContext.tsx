@@ -1,10 +1,9 @@
 import { createContext, useState } from "react";
-import { createIncrementalCompilerHost } from "typescript";
 
 interface Data {
-  year: number, 
-  month: number, 
-  usage: number
+    year: number, 
+    month: number, 
+    usage: number
 }
 
 interface Context{
@@ -33,7 +32,7 @@ const DataListContextProvider = ({children}: Props) => {
     };
     
     const onAdd = (toDo: Data) => {
-        setDataList([...DataList, toDo]);
+        setDataList([...DataList, toDo].sort((a, b) => a.month - b.month));
     };
 
     return(

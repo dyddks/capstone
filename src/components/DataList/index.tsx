@@ -8,8 +8,15 @@ const Container = styled.div`
     flex-direction: column;
     width: 40%;
     border: 2px solid lightgray;
-
+    border-radius: 4px;
     overflow: scroll;
+`;
+
+const DefaltText = styled.div`
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    background-color: lightgray;
 `;
 
 export const DataList = () => {
@@ -17,6 +24,7 @@ export const DataList = () => {
 
     return(
         <Container>
+            {!DataList.length && <DefaltText>최대 6개까지 입력 가능합니다.</DefaltText>}
             {DataList.map((Data) => (
                 <DataItem
                     key={0}

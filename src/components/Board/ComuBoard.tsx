@@ -25,32 +25,57 @@ interface Item {
     readonly createdAt: string;
 }
 
-export const ComuBoard = () => {
+interface Props {
+    readonly userName: string;
+}
+
+export const ComuBoard = ({userName}: Props) => {
     const [items, setItems] = useState<ReadonlyArray<Item>>([]);
     const [currentPage, setCurrentPage] = useState(0);
     const [ totalPage, setTotalPage ] = useState(0);
-    
+
     const handleClick = (pageNumber: number) => {
         setCurrentPage(pageNumber);
     };
 
     useEffect(() => {
-        fetch(`/board/list?page=${currentPage}`) //서버에서 게시물 리스트 받아오기
-        .then(Response => Response.json())
-        .then((json) => {
-            setItems(json.content);
-            setTotalPage(json.totalPages);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
-    }, [currentPage]);
+        if (userName === '') {
+            fetch(`/board/list?page=${currentPage}`) //서버에서 게시물 리스트 받아오기
+            .then(Response => Response.json())
+            .then((json) => {
+                setItems(json.content);
+                setTotalPage(json.totalPages);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+        }
+        
+        if (userName !== '') {
+            setItems([])
+            // fetch(`/board/userlist?page=${currentPage}`) //유저 게시물 받아오기
+            // .then(Response => Response.json())
+            // .then((json) => {
+            //     setItems(json.content);
+            //     setTotalPage(json.totalPages);
+            // })
+            // .catch((error) => {
+            //     console.error(error);
+            // });
+            items.forEach((item) => {
+                if (item.userName === userName) {
+                    setItems([...items, item]);
+                }
+            });
+            
+        }
+    }, [currentPage, userName]);
 
     return(
         <Container>
             {items.map((item) => (<BoardItem key={item.num} num={item.num} title={item.title} userName={item.userName} createAt={item.createdAt}></BoardItem>))}
             <div>
-            {Array.from({ length: totalPage }, (_, index) => index).map(
+            {Array.from({ length: items.length/10+1 }, (_, index) => index).map(
             (pageNumber) => (
                 <PageButton
                 key={pageNumber}

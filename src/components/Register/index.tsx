@@ -94,10 +94,18 @@ export const RegisterForm = ({title}: Props) => {
 
     const userPhone = {
         required: "필수 필드입니다.",
+        pattern: {
+            value: /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}$/,
+            message: "- 포함하여 입력해주세요.",
+        },
     }
 
     const userEmail = {
         required: "필수 필드입니다.",
+        pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: "이메일 형식에 맞지 않습니다.",
+        },
     }
 
     const userPassword = {
@@ -110,7 +118,7 @@ export const RegisterForm = ({title}: Props) => {
             value: 13,
             message: "최대 13자입니다.",
         },
-    };
+    }
 
     return(
         <Container onSubmit={handleSubmit(onSubmitHandler)}>

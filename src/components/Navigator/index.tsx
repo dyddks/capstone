@@ -9,10 +9,9 @@ const Nav = styled(Link)`
     padding: 10px 30px;
     text-decoration: none;
     color: black;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 1.2rem;
     border-radius: 4px;
-    font-family: 'TAEBAEKfont';
     :hover{
         background-color: #d7d4d4;
     }

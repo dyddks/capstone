@@ -60,6 +60,9 @@ export const AnalysisPage = () => {
   const nav = useNavigate();
   const dataListContext = useContext(DataListContext);
 
+  const analysisResult = () => {
+    nav('/result')
+  }
   return(
     <Container>
       <Title>
@@ -71,7 +74,7 @@ export const AnalysisPage = () => {
         <DataInputSet/>
         <DataList/>
       </AnalysisDataSet>
-      <Button>예측하기</Button>
+      <Button onClick={analysisResult}>예측하기</Button>
     </Container>
   )
 }

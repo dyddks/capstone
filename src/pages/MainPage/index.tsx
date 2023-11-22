@@ -1,15 +1,16 @@
 import styled from "@emotion/styled";
 import { useNavigate } from 'react-router-dom';
 import { Fade } from '@mui/material';
+import useMediaQuery from '@mui/material';
 
 const Container = styled.div`
-    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     font-family: 'TAEBAEKfont';
     margin-top: 5%;
+
 `;
 const NavImage = styled.div`
     position: relative;
@@ -80,7 +81,7 @@ const ImageSet4 = styled.div`
 
 export const MainPage = () => {
     const nav = useNavigate();
-    
+
     return(
         <Container>
             <NavImage>

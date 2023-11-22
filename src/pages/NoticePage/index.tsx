@@ -24,6 +24,8 @@ const Label = styled.span`
 `;
 const Image = styled.img`
     width: 100%;
+    opacity: 0.8;
+    filter: brightness(0.7);
 `;
 const Hr = styled.hr`
     color: black;

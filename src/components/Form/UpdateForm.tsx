@@ -41,6 +41,11 @@ export const UpdateForm = () => {
     const cerrentPhone = sessionStorage.getItem('phone');
 
     const updatePassword = () => {
+        if (password.length < 4 || password.length > 13) {
+            alert('비밀번호는 4자 이상 13자 이하 입니다.');
+            return;
+        }
+
         fetch('user/update', {
             method: 'POST',
             body: JSON.stringify({

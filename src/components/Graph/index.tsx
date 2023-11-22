@@ -11,17 +11,28 @@ const Container = styled.div`
     background-color: #fefefe;
     margin: 5% 0;
 `;
+interface dataList {
+    readonly x: string;
+    readonly y: number;
+}
 
 export const Graph = () => {
-    const dataListContext = useContext(DataListContext);
-    const data=[
+    const {DataList} = useContext(DataListContext);
+    const dataList = [{}];
+    const data = [
         {
-        "id": "japan",
-        "color": "hsl(24, 70%, 50%)",
-        "data": [
-            {}
-            ]
-        }]
+            "id": "gas",
+            "color": "hsl(24, 70%, 50%)",
+            "data": dataList
+        }
+    ]
+    
+
+    useEffect(() => {
+        DataList.forEach((Data) => {
+            dataList.push({x: `${Data.year}.${Data.month}`, y: Data.usage});
+        })
+    })
 
     return(
         <Container>

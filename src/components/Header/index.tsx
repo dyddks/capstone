@@ -6,7 +6,7 @@ import Navigator from 'components/Navigator';
 
 const Container = styled.div`
     display: flex;
-    padding: 2rem 24px;
+    padding: 0 24px;
     decoration: none;
     justify-content: space-between;
     align-items: center;
@@ -15,13 +15,21 @@ const Nav = styled.div`
     display: flex;
 `;
 const Title = styled(Link)`
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    font-size: 32px;
+    font-size: 2rem;
+    font-weight: bold;
+    font-style: italic;
+    color: gray;
+`;
+const Logo = styled.img`
+    width: 4rem;
 `;
 
 export const Header = () => {
     const [login, setLogin] = useState('로그인')
-    const nav = useNavigate()
+    const nav = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
@@ -51,14 +59,17 @@ export const Header = () => {
     return(
         <>
         <Container>
-            <Title to ='/'>Capston</Title>
+            <Title to ='/'>
+                <Logo src='./image/logo.png' alt="Description"/>
+                H-Track
+            </Title>
             {location.pathname !== '/' ? <Navigator/> : ''}
             <Nav>
                 <Button label={login} onClick={logOut}/>
                 {navChange()}
             </Nav>
         </Container>
-        <hr/>
+        
         </>
     );
 };

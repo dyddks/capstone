@@ -19,9 +19,11 @@ const MyPageNav = styled.div`
 `;
 const Label = styled.div`
     font-size: 2rem;
+    font-weight: bold;
 `;
 const Nav = styled.button`
     font-size: 1rem;
+    border-radius: 4px;
 `;
 
 export const MyPage = () => {

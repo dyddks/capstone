@@ -3,7 +3,6 @@ import { YearDropdown } from 'components/Dropdown/YearDropdown';
 import { MonthDropdown } from 'components/Dropdown/MonthDropdown';
 import { useContext, useState } from 'react';
 import { DataListContext } from 'context/GasData/GasDataContext';
-import { useForm, SubmitHandler } from "react-hook-form";
 
 const Container = styled.div`
   display: flex;
@@ -17,7 +16,9 @@ const Input = styled.input`
   border: 1px solid gray;
   border-radius: 4px;
   height: 2rem;
+  text-align: center;
 `;
+
 const Button = styled.button`
   border: 1px solid lightgray;
   border-radius: 4px;
@@ -45,6 +46,18 @@ export const DataInputSet = () => {
 
   const onClick = () => {
     const data = {year, month, usage};
+    for (const data of DataList) {
+      if (data.month === month) {
+        alert('이미 같은 월의 데이터가 존재합니다.');
+        return;
+      }
+    }
+
+    if (DataList.length === 6) {
+      alert('데이터는 최대 6개까지만 입력 가능합니다.');
+      return;
+    }
+
     onAdd(data);
   }
 

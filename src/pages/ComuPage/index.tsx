@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
 import { ComuBoard } from 'components/Board/ComuBoard'
 import { Link, useNavigate } from 'react-router-dom';
+import { Search } from 'components/Search';
+import { useState } from 'react';
 
 const Container = styled.div`
 	display: flex;
@@ -25,6 +27,8 @@ const Label = styled.span`
 `;
 const Image = styled.img`
 	width: 100%;
+	opacity: 0.8;
+  filter: brightness(0.8);
 `;
 const Hr = styled.hr`
 	color: black;
@@ -43,6 +47,12 @@ const Button = styled.button`
 
 export const ComuPage = () => {
 	const nav = useNavigate();
+	const [userName, setUserName] = useState('');
+
+	const search = (userName: string) => {
+		setUserName(userName);
+	}
+
 	return(
 		<Container>
 			<Title>
@@ -50,7 +60,8 @@ export const ComuPage = () => {
 				<Label>자유게시판</Label>
 			</Title>
 			<Hr/>
-			<ComuBoard/>
+			<Search search={search}/>
+			<ComuBoard userName={userName}/>
 			<Button onClick={() => {sessionStorage.getItem('id') != null ? nav('/write') : nav('/login')}}>글쓰기</Button>
 		</Container>
 	)

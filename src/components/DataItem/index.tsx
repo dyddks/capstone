@@ -5,7 +5,6 @@ const Container = styled.div`
   display: flex;
   aling-items: center;
   justify-content: space-around;
-  margin-bottom: 1rem;
 `;
 
 const Label = styled.div`
@@ -27,11 +26,14 @@ interface Props{
 
 export const DataItem = ({data, onDelete}: Props) => {
   return(
+    <>
     <Container>
       <Label>{data.year}년</Label>
       <Label>{data.month}월</Label>
       <Label>{data.usage}m³</Label>
       <Button label='삭제' onClick={onDelete}></Button>
     </Container>
+    <hr/>
+    </>
   );
 };
