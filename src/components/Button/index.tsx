@@ -1,29 +1,30 @@
 import styled from '@emotion/styled';
 
 const Container = styled.button`
-    border: none;
-    color: rgba(0, 0, 0, 0.6);
-    background-color: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    margin: 0 1rem;
-    font-family: 'Pretendard-Regular';
-    font-weight: 900;
-    font-size: 1.2rem;
-    
-    &:hover{
-        opacity: 0.5;
-    }
+  border: none;
+  color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0);
+  cursor: pointer;
+  margin: 0 1rem;
+  font-family: 'Pretendard-Regular';
+  font-weight: 900;
+  font-size: 1.2rem;
+
+  &:hover {
+    opacity: 0.5;
+  }
 `;
 
-interface Props{
-    readonly label: string;
-    readonly color?: string;
-    readonly onClick?: () => void;
+interface Props {
+  readonly label: string;
+  readonly color?: string;
+  readonly onClick?: () => void;
 }
 
-export const Button = ({label, color = '#ffffff', onClick}: Props) => {
-    return(
-        <Container color={color} onClick={onClick}>{label}</Container>
-    );
+export const Button = ({ label, color = '#ffffff', onClick }: Props) => {
+  return (
+    <Container color={color} onClick={onClick}>
+      {label}
+    </Container>
+  );
 };
-

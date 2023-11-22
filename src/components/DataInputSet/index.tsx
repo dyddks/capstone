@@ -29,23 +29,22 @@ const Button = styled.button`
   }
 `;
 
-
 export const DataInputSet = () => {
-  const {DataList, onAdd} = useContext(DataListContext);
+  const { DataList, onAdd } = useContext(DataListContext);
   const [year, setYear] = useState(0);
   const [month, setMonth] = useState(0);
   const [usage, setUsage] = useState(0);
 
   const storeMonth = (data: number) => {
     setMonth(data);
-  }
+  };
 
   const storeYear = (data: number) => {
     setYear(data);
-  }
+  };
 
   const onClick = () => {
-    const data = {year, month, usage};
+    const data = { year, month, usage };
     for (const data of DataList) {
       if (data.month === month) {
         alert('이미 같은 월의 데이터가 존재합니다.');
@@ -59,14 +58,17 @@ export const DataInputSet = () => {
     }
 
     onAdd(data);
-  }
+  };
 
-  return(
+  return (
     <Container>
-      <YearDropdown storeYear={storeYear}/>
-      <MonthDropdown  storeMonth={storeMonth}/>
-      <Input placeholder='사용량을 입력하세요' onChange={(e) => setUsage(Number(e.target.value))}></Input>
+      <YearDropdown storeYear={storeYear} />
+      <MonthDropdown storeMonth={storeMonth} />
+      <Input
+        placeholder="사용량을 입력하세요"
+        onChange={(e) => setUsage(Number(e.target.value))}
+      ></Input>
       <Button onClick={onClick}>추가</Button>
     </Container>
   );
-}
+};

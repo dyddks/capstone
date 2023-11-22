@@ -20,10 +20,10 @@ const DropdownItem = styled.option`
 `;
 
 interface Props {
-  readonly storeMonth: (data: number) => void; 
+  readonly storeMonth: (data: number) => void;
 }
 
-export const MonthDropdown = ({storeMonth}: Props) => {
+export const MonthDropdown = ({ storeMonth }: Props) => {
   const [selectedMonth, setSelectedMonth] = useState(0);
 
   const handleMonthChange = (event: any) => {

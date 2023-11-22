@@ -19,9 +19,9 @@ const DropdownItem = styled.option`
 interface Props {
   readonly storeYear: (data: number) => void;
 }
-export const YearDropdown = ({storeYear}: Props) => {
+export const YearDropdown = ({ storeYear }: Props) => {
   const [selectedYear, setSelectedYear] = useState(0);
-  
+
   const handleYearChange = (event: any) => {
     setSelectedYear(event.target.value);
     storeYear(event.target.value);

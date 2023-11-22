@@ -14,26 +14,26 @@ const Label = styled.div`
 `;
 
 interface Data {
-  year: number,
-  month: number,
-  usage: number
+  year: number;
+  month: number;
+  usage: number;
 }
 
-interface Props{
+interface Props {
   readonly data: Data;
-  readonly onDelete?: ()=>void;
+  readonly onDelete?: () => void;
 }
 
-export const DataItem = ({data, onDelete}: Props) => {
-  return(
+export const DataItem = ({ data, onDelete }: Props) => {
+  return (
     <>
-    <Container>
-      <Label>{data.year}년</Label>
-      <Label>{data.month}월</Label>
-      <Label>{data.usage}m³</Label>
-      <Button label='삭제' onClick={onDelete}></Button>
-    </Container>
-    <hr/>
+      <Container>
+        <Label>{data.year}년</Label>
+        <Label>{data.month}월</Label>
+        <Label>{data.usage}m³</Label>
+        <Button label="삭제" onClick={onDelete}></Button>
+      </Container>
+      <hr />
     </>
   );
 };

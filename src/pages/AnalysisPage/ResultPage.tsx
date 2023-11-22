@@ -19,10 +19,10 @@ const Text = styled.div`
 export const ResultPage = () => {
   const gasDataContext = useContext(DataListContext);
 
-  return(
+  return (
     <Container>
       <Text>분석결과 예상되는 이번달 가스 사용량은 입니다. </Text>
-      <Graph/>
+      <Graph />
     </Container>
-  )
-}
+  );
+};

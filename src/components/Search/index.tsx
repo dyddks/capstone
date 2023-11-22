@@ -1,4 +1,4 @@
-import styled from '@emotion/styled'
+import styled from '@emotion/styled';
 import { useState } from 'react';
 
 const Container = styled.div`
@@ -22,24 +22,24 @@ const Button = styled.button`
   border-radius: 4px;
 
   :hover {
-		box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
-	}
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
+  }
 `;
 
 interface Props {
-  readonly search: (userName:string) => void;
+  readonly search: (userName: string) => void;
 }
 
-export const Search = ({search}: Props) => {
+export const Search = ({ search }: Props) => {
   const [userName, setUserName] = useState('');
 
   const onClick = (userName: string) => {
     search(userName);
-  }
-  return(
+  };
+  return (
     <Container>
-      <Input placeholder='이름으로 검색' onChange={(e) => setUserName(e.target.value)}></Input>
+      <Input placeholder="이름으로 검색" onChange={(e) => setUserName(e.target.value)}></Input>
       <Button onClick={() => onClick(userName)}>검색</Button>
     </Container>
   );
-}
+};

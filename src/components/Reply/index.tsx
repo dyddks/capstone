@@ -1,12 +1,6 @@
 import styled from '@emotion/styled';
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 export const Reply = () => {
-  return(
-    <Container>
-      
-    </Container>
-  );
-}
+  return <Container></Container>;
+};

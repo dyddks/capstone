@@ -12,19 +12,19 @@ const Container = styled.div`
 `;
 
 const Title = styled.div`
-	position: relative;
+  position: relative;
   width: 100%;
 `;
 
 const Label = styled.span`
-	position: absolute;
-	left: 50%;
-	top: 50%;
-	transform: translate(-50%, -50%);
-	color: white;
-	font-size: 3rem;
-	font-weight: bold;
-	text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.8);
 `;
 
 const Image = styled.img`
@@ -61,20 +61,20 @@ export const AnalysisPage = () => {
   const dataListContext = useContext(DataListContext);
 
   const analysisResult = () => {
-    nav('/result')
-  }
-  return(
+    nav('/result');
+  };
+  return (
     <Container>
       <Title>
-        <Image src='./image/analysisBackground.png' alt="Description"/>
+        <Image src="./image/analysisBackground.png" alt="Description" />
         <Label>가스 사용량 예측</Label>
       </Title>
-      <Hr/>
+      <Hr />
       <AnalysisDataSet>
-        <DataInputSet/>
-        <DataList/>
+        <DataInputSet />
+        <DataList />
       </AnalysisDataSet>
       <Button onClick={analysisResult}>예측하기</Button>
     </Container>
-  )
-}
+  );
+};
