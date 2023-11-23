@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navigator from 'components/Navigator';

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { UserForm } from 'components/User';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
@@ -157,19 +157,21 @@ export const WritePage = () => {
   };
 
   return (
-    <Container onSubmit={handleSubmit(onSubmitHandler)}>
-      <Div>자유게시판</Div>
-      <Label>게시글 작성</Label>
-      <Hr />
-      <Title placeholder="제목을 입력해 주세요" defaultValue={title} {...register('title')} />
-      <Body
-        placeholder="내용을 입력해 주세요"
-        maxLength={500}
-        defaultValue={content}
-        {...register('content')}
-      />
-      <Button label="등록"></Button>
+    <>
+      <Container onSubmit={handleSubmit(onSubmitHandler)}>
+        <Div>자유게시판</Div>
+        <Label>게시글 작성</Label>
+        <Hr />
+        <Title placeholder="제목을 입력해 주세요" defaultValue={title} {...register('title')} />
+        <Body
+          placeholder="내용을 입력해 주세요"
+          maxLength={500}
+          defaultValue={content}
+          {...register('content')}
+        />
+        <Button label="등록"></Button>
+      </Container>
       <Button1 onClick={() => nav('/community')}>뒤로가기</Button1>
-    </Container>
+    </>
   );
 };

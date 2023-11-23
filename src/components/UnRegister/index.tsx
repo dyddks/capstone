@@ -1,8 +1,6 @@
 import styled from '@emotion/styled';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Button } from 'components/Button';
-import { useContext } from 'react';
-import { UserDataContext } from 'context/UserData/UserDataContext';
+import { Button } from 'components/Button/linkButton';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -38,13 +36,7 @@ const ErrorMessage = styled.div`
   padding: 4px;
   margin: 8px;
 `;
-const Id = styled.input`
-  visible: false;
-`;
 
-interface Props {
-  readonly title: string;
-}
 interface FormValue {
   password: string;
 }

@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 
 const Container = styled.div`
   display: flex;

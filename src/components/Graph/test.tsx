@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { ResponsiveLine } from '@nivo/line';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import blurGraph from 'image/blurGraph.png';

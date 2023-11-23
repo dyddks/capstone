@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { useState } from 'react';
 import axios from 'axios';
 

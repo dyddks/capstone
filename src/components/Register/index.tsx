@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { Button } from 'components/Button';
+import { Button } from 'components/Button/linkButton';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
