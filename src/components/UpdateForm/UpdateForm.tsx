@@ -2,17 +2,28 @@ import styled from '@emotion/styled';
 import { Button } from 'components/Button/linkButton';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
   border-radius: 4px;
-  border: 1px solid black;
-  box-shadow: 5px 5px 5px 5px lightgray;
-  text-align: center;
-  padding: 24px;
-  width: 60%;
+  border: 2px solid gray;
+  width: 69%;
+  margin: 0 1%;
+  padding: 2% 0;
+`;
+const Title = styled.div`
+  width: 90%;
+`;
+const Label = styled.h1`
+  width: 90%;
+`;
+const Hr = styled.hr`
+  height: 1.3px;
+  background: black;
 `;
 
 const Input = styled.input`
@@ -24,127 +35,129 @@ const Input = styled.input`
   width: 80%;
 `;
 
-const InputSet = styled.form`
+const InputSet = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 `;
 
 export const UpdateForm = () => {
+  const nav = useNavigate();
+  const [cerrentPassword, setCurrentPassword] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-
   const id = sessionStorage.getItem('id');
-  const cerrentName = sessionStorage.getItem('name');
-  const cerrentPassword = sessionStorage.getItem('password');
-  const cerrentPhone = sessionStorage.getItem('phone');
 
   const updatePassword = () => {
+    const  name = sessionStorage.getItem('name');
+    const phone = sessionStorage.getItem('phone');
+    
     if (password.length < 4 || password.length > 13) {
       alert('비밀번호는 4자 이상 13자 이하 입니다.');
       return;
     }
-
+    
     axios.post('user/update', {
       id,
-      cerrentName,
+      name,
       password,
-      cerrentPhone,
+      phone,
     })
-    .then(() => {
-      // console.log(password);
-      alert('회원정보가 변경되었습니다.');
+    .then((result) => {
+      if (result.data.state === 1) {
+        alert('회원정보가 변경되었습니다. 다시 로그인해주세요.');
+        sessionStorage.clear();
+        nav('/');
+      }
+      if (result.data.state === 0) {
+        alert(result.data.message);
+      }
     })
     .catch((error) => {
       console.error(error);
       alert('잠시후 다시 시도해주세요.');
     })
-
-    // fetch('user/update', {
-    //   method: 'POST',
-    //   body: JSON.stringify({
-    //     id,
-    //     cerrentName,
-    //     password,
-    //     cerrentPhone,
-    //   }),
-    //   headers: {
-    //     'Content-type': 'application/json; charset=UTF-8',
-    //   },
-    // })
-    //   .then((Response) => Response.json())
-    //   .then((json) => console.log(json))
-    //   .catch((error) => {
-    //     console.error(error);
-    //   });
-    // alert('회원정보가 변경되었습니다.');
-  };
+  }
 
   const updateName = () => {
-    fetch('user/update', {
-      method: 'POST',
-      body: JSON.stringify({
-        id,
-        name,
-        cerrentPassword,
-        cerrentPhone,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+    const phone = sessionStorage.getItem('phone');
+    const password = cerrentPassword;
+    axios.post('user/update', {
+      id,
+      name,
+      password,
+      phone,
     })
-      .then((Response) => Response.json())
-      .then((json) => console.log(json))
-      .catch((error) => {
-        console.error(error);
-      });
-    alert('회원정보가 변경되었습니다.');
-  };
+    .then((result) => {
+      if(result.data.state === 1){
+        alert('회원정보가 변경되었습니다. 다시 로그인해주세요.');
+        sessionStorage.clear();
+        nav('/');
+      }
+      if (result.data.state === 0) {
+        alert(result.data.message);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert('잠시후 다시 시도해주세요.');
+    });
+  }
 
   const updatePhoneNunber = () => {
-    fetch('user/update', {
-      method: 'POST',
-      body: JSON.stringify({
-        id,
-        cerrentName,
-        cerrentPassword,
-        phone,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
+    const name = sessionStorage.getItem('name');
+    const password = cerrentPassword;
+
+    axios.post('user/update', {
+      id,
+      name,
+      password,
+      phone,
     })
-      .then((Response) => Response.json())
-      .then((json) => console.log(json))
-      .catch((error) => {
-        console.error(error);
-      });
-    alert('회원정보가 변경되었습니다.');
-  };
+    .then((result) => {
+      if (result.data.state === 1) {
+        alert('회원정보가 변경되었습니다. 다시 로그인해주세요.');
+        sessionStorage.clear();
+        nav('/');
+      }
+      if (result.data.state === 0) {
+        alert(result.data.message);
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+      alert('잠시후 다시 시도해주세요.');
+    });
+  }
 
   return (
     <Container>
-      <h1>회원정보 수정</h1>
+      <Title>
+        <Label>회원정보 수정</Label>
+        <Hr/>
+      </Title>
+      <InputSet>
+      <Input type='password' placeholder='현재 비밀번호 확인' onChange={(e) => setCurrentPassword(e.target.value)}/>
+      </InputSet>
       <InputSet>
         <Input
           type="password"
           placeholder="변경할 비밀번호"
           onChange={(e) => setPassword(e.target.value)}
-          className="mb-3"
         />
         <Button label="비밀번호 변경" onClick={updatePassword}></Button>
       </InputSet>
       <InputSet>
-        <Input placeholder="이름 변경" onChange={(e) => setName(e.target.value)} className="mb-3" />
+        <Input placeholder="이름 변경" onChange={(e) => setName(e.target.value)} />
         <Button label="이름 변경" onClick={updateName}></Button>
       </InputSet>
       <InputSet>
         <Input
           placeholder="핸드폰번호 변경 -를 포함하여 입력"
           onChange={(e) => setPhone(e.target.value)}
-          className="mb-3"
         />
         <Button label="핸드폰번호 변경" onClick={updatePhoneNunber}></Button>
       </InputSet>

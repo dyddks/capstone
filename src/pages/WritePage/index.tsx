@@ -44,20 +44,6 @@ const Body = styled.textarea`
   text-align: left;
   resize: none;
 `;
-const StyledLink = styled(Link)`
-  font-size: 1rem;
-  margin-left: 80%;
-  text-decoration: none;
-  color: black;
-  border: 1px solid black;
-  border-radius: 4px;
-  background-color: lightgray;
-  padding: 5px;
-
-  :hover {
-    text-decoration: underline;
-  }
-`;
 const Button1 = styled.button`
   padding: 8px 12px;
   border-radius: 4px;

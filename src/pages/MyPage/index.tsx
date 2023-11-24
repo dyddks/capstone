@@ -1,29 +1,32 @@
 import styled from '@emotion/styled';
-import { Button } from 'components/Button/linkButton';
 import { UserForm } from 'components/User';
-import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { UpdateForm } from 'components/UpdateForm/UpdateForm';
 import { UnRegisterForm } from 'components/UnRegister';
 
 const Container = styled.div`
   display: flex;
-  margin: 10%;
+  width: 100%;
 `;
 const MyPageNav = styled.div`
   display: flex;
   flex-direction: column;
-  width: 30%;
   text-align: center;
-  padding-right: 10%;
+  width: 30%;
+  padding: 5%;
+  border-radius: 4px;
+  box-shadow: 0px 0px 5px 5px lightgray;
 `;
-const Label = styled.div`
-  font-size: 2rem;
+const Label = styled.h1`
   font-weight: bold;
 `;
 const Nav = styled.button`
-  font-size: 1rem;
+  font-size: 1.4rem;
   border-radius: 4px;
+`;
+const Hr = styled.hr`
+  height: 1.3px;
+  background: #000000;
 `;
 
 export const MyPage = () => {
@@ -46,7 +49,7 @@ export const MyPage = () => {
     <Container>
       <MyPageNav>
         <Label>마이페이지</Label>
-        <hr />
+        <Hr />
         <Nav onClick={() => setState(1)}>회원정보</Nav>
         <hr />
         <Nav onClick={() => setState(2)}>회원정보 수정</Nav>

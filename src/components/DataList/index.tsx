@@ -19,7 +19,7 @@ const DefaltText = styled.div`
   background-color: lightgray;
 `;
 
-export const DataList = () => {
+export const DataListView = () => {
   const { DataList, onDelete } = useContext(DataListContext);
 
   return (

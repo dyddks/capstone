@@ -6,11 +6,12 @@ import { useContext, useEffect, useState } from 'react';
 const Container = styled.div`
   border: 2px solid lightgray;
   border-radius: 16px;
-  width: 70%;
-  height: 400px;
+  width: 70vw;
+  height: 50vh;
   background-color: #fefefe;
   margin: 5% 0;
 `;
+
 interface dataList {
   readonly x: string;
   readonly y: number;
@@ -18,7 +19,7 @@ interface dataList {
 
 export const Graph = () => {
   const { DataList } = useContext(DataListContext);
-  const dataList = [{}];
+  const [dataList, setDataList] = useState<Array<dataList>>([]);
   const data = [
     {
       id: 'gas',
@@ -28,10 +29,10 @@ export const Graph = () => {
   ];
 
   useEffect(() => {
-    DataList.forEach((Data) => {
-      dataList.push({ x: `${Data.year}.${Data.month}`, y: Data.usage });
+    DataList.map((Data) => {
+      setDataList(dataList => [...dataList, {x: `${Data.year}.${Data.month}`, y: Data.usage}]);
     });
-  });
+  }, []);
 
   return (
     <Container>
@@ -43,7 +44,7 @@ export const Graph = () => {
           type: 'linear',
           min: 'auto',
           max: 'auto',
-          stacked: false,
+          stacked: true,
           reverse: false,
         }}
         axisTop={null}
@@ -70,32 +71,6 @@ export const Graph = () => {
         pointBorderColor={{ from: 'serieColor' }}
         pointLabelYOffset={-12}
         useMesh={true}
-        // legends={[
-        //     {
-        //         anchor: 'bottom-right',
-        //         direction: 'column',
-        //         justify: false,
-        //         translateX: 100,
-        //         translateY: 0,
-        //         itemsSpacing: 0,
-        //         itemDirection: 'left-to-right',
-        //         itemWidth: 80,
-        //         itemHeight: 20,
-        //         itemOpacity: 0.75,
-        //         symbolSize: 12,
-        //         symbolShape: 'circle',
-        //         symbolBorderColor: 'rgba(0, 0, 0, .5)',
-        //         effects: [
-        //             {
-        //                 on: 'hover',
-        //                 style: {
-        //                     itemBackground: 'rgba(0, 0, 0, .03)',
-        //                     itemOpacity: 1
-        //                 }
-        //             }
-        //         ]
-        //     }
-        // ]}
       />
     </Container>
   );

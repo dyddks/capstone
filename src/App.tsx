@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { Header } from 'components/Header';
 import { Routes, Route, Link } from 'react-router-dom';
-import { MainPage } from 'pages/MainPage';
+import { MainPage } from 'pages/MainPage/index1';
 import { LoginPage } from 'pages/LoginPage';
 import { Layout } from 'components/Layout';
 import { SignUpPage } from 'pages/RegisterPage';

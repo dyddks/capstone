@@ -13,10 +13,10 @@ const Container = styled.div`
 `;
 const PageButton = styled.button`
   margin: 0 3px;
-  background-color: white;
-  :hover {
-    cursor: pointer;
-  }
+  border: none;
+  background-color: #ffffff;
+  font-weight: 540;
+  font-size: 1.5rem;
 `;
 
 interface Item {

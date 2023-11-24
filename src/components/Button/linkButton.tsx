@@ -17,7 +17,6 @@ const Container = styled.button`
 
 interface Props {
   readonly label: string;
-  readonly color?: string;
   readonly onClick?: () => void;
 }
 

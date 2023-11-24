@@ -7,16 +7,23 @@ import axios from 'axios';
 const Container = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: space-around;
   border-radius: 4px;
-  border: 1px solid black;
-  box-shadow: 5px 5px 5px 5px lightgray;
-  padding: 24px;
-  width: 60%;
-  background-color: rgba(255, 255, 255, 0.7);
+  border: 2px solid gray;
+  width: 69%;
+  margin: 0 1%;
 `;
-
+const Title = styled.div`
+  width: 90%;
+`;
+const Label = styled.h1`
+  width: 90%;
+`;
+const Hr = styled.hr`
+  height: 1.3px;
+  background: black;
+`;
 const Input = styled.input`
   display: flex;
   justify-content: space-between;
@@ -93,7 +100,10 @@ export const UnRegisterForm = () => {
 
   return (
     <Container onSubmit={handleSubmit(onSubmitHandler)}>
-      <h1>회원탈퇴</h1>
+      <Title>
+        <Label>회원탈퇴</Label>
+        <Hr/>
+      </Title>
       <Input type="password" placeholder="비밀번호 확인" {...register('password', userPassword)} />
       {errors?.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
       <Button label="회원탈퇴"></Button>

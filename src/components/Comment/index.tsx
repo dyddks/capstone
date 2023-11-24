@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CommentItem } from 'components/CommentItem';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -42,27 +44,23 @@ const PageButton = styled.button`
   }
 `;
 
+interface Props {
+  readonly id: string;
+}
 interface Item {
   readonly id: string;
   readonly comment: string;
   readonly userName: string;
 }
+
 interface FormValue {
   readonly comment: string;
 }
-export const Comment = () => {
-  const [items, setItems] = useState<ReadonlyArray<Item>>([
-    { id: '1', comment: '1Qk', userName: 'dyddks' },
-    { id: '2', comment: '2Qk', userName: 'wnsdud' },
-    { id: '3', comment: '3Qk', userName: 'rhkdgh' },
-    { id: '4', comment: '4Qk', userName: 'dyddks' },
-    { id: '5', comment: '5Qk', userName: 'dyddks' },
-    { id: '6', comment: '6Qk', userName: 'dyddks' },
-    { id: '7', comment: '7Qk', userName: 'dyddks' },
-    { id: '8', comment: '8Qk', userName: 'dyddks' },
-    { id: '9', comment: '9Qk', userName: 'dyddks' },
-    { id: '10', comment: '10Qk', userName: 'dyddks' },
-  ]);
+export const Comment = ({id}: Props) => {
+  const [items, setItems] = useState<ReadonlyArray<Item>>([]);
+  const [boardId, setBoardId] = useState('');
+  const location = useLocation();
+
   const {
     register,
     handleSubmit,
@@ -77,32 +75,51 @@ export const Comment = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
+  useEffect(() => {
+    axios.get(`board/${id}`)
+    .then((result) => {
+      setBoardId(result.data.id);
+    })
+  });
+
   const handleClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
   const visibleItems = items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  // fetch("http://210.125.212.210:8080/user/login") //서버에서 댓글 받아오기
+  // fetch("comment/write") //서버에서 댓글 받아오기
   //     .then(Response => Response.json())
   //     .then((json) => setItems(json))
   //     .catch((error) => {
   //         console.error(error);
   //     });
   const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
-    //const comment = data
-    // fetch("user/login", {
-    //     method: 'POST',
-    //     body: JSON.stringify({
-    //         comment
-    //     }),
-    //     headers: {
-    //         'Content-type': 'application/json; charset=UTF-8',
-    //     },
-    // })
+    const Data = {
+      comment: data.comment,
+      user_id: sessionStorage.getItem('id'),
+      board_id: boardId};
+    const {comment, user_id, board_id} = Data;
+    
+    axios.post('comment/write', {
+      comment,
+      user_id,
+      board_id
+    })
+    .then((result) => {
+      if (result.data.state === 1) {
+        alert(result.data.message);
+      }
+    })
+    .catch((errors) => {
+      console.log(errors);
+      alert('잠시후 다시 시도해주세요.');
+    });
   };
+
   const comment = {
     required: '입력하세요',
   };
+
   return (
     <Container>
       <InputSet onSubmit={handleSubmit(onSubmitHandler)}>

@@ -1,19 +1,22 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { Fade } from '@mui/material';
-import useMediaQuery from '@mui/material';
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-family: 'TAEBAEKfont';
-  margin-top: 5%;
+  font-weight: bold;
+  height: 100vh;
+`;
+const Nav = styled.div`
+  width: 100%;
+  height: 100vh;
 `;
 const NavImage = styled.div`
   position: relative;
-  background: url('/image/mainBackground1.png') no-repeat;
+  background: url('/image/mainBackground1.png');
   background-size: cover;
   width: 100%;
   height: 700px;
@@ -96,12 +99,12 @@ export const MainPage = () => {
           </Fade>
         </ImageSet1>
         <ImageSet2>
-          <HoverText>마이 페이지</HoverText>
+          <HoverText>제품 소개</HoverText>
           <Fade appear in timeout={4000}>
             <Image
               src={'./image/002.png'}
               onClick={() => {
-                sessionStorage.getItem('id') !== null ? nav('/mypage') : nav('/login');
+                nav('/info');
               }}
             />
           </Fade>

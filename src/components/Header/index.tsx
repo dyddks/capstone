@@ -67,7 +67,7 @@ export const Header = () => {
         <Logo src="./image/logo.png" alt="Description" />
         H-Track
       </Title>
-      {location.pathname !== '/' ? <Navigator /> : ''}
+      <Navigator />
       <Nav>
         <Button label={login} onClick={logOut} />
         {navChange()}

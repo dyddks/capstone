@@ -1,19 +1,54 @@
 import styled from '@emotion/styled';
+import { useState, useEffect } from 'react'
+import { faV } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Container = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
 `;
-
+const Contoller = styled(FontAwesomeIcon)`
+  :hover {
+    cursor: pointer;
+  }
+`;
 export const InfoPage = () => {
+  const [imgNum, setImgNum] = useState(1);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (imgNum === 6) {
+        setImgNum(1);
+      } else {
+        setImgNum(imgNum + 1);
+      }
+    }, 3000);
+
+    return () => clearInterval(intervalId);
+  }, [imgNum]);
+
+  const next = () => {
+    if (imgNum === 6) {
+      setImgNum(1);
+      return;
+    }
+    setImgNum(imgNum + 1);
+  }
+
+  const before = () => {
+    if (imgNum === 1) {
+      setImgNum(6);
+      return;
+    }
+    setImgNum(imgNum - 1);
+  }
   return (
     <Container>
-      <img src={process.env.PUBLIC_URL + '/image/Chapter1.gif'} alt="chapter1" />
-      <img src={process.env.PUBLIC_URL + '/image/Chapter2.gif'} alt="chapter2" />
-      <img src={process.env.PUBLIC_URL + '/image/Chapter3.gif'} alt="chapter3" />
-      <img src={process.env.PUBLIC_URL + '/image/Chapter4.gif'} alt="chapter4" />
-      <img src={process.env.PUBLIC_URL + '/image/Chapter5.gif'} alt="chapter5" />
-      <img src={process.env.PUBLIC_URL + '/image/Chapter6.gif'} alt="chapter6" />
+      <Contoller icon={faV} rotation={90} size='2xl' onClick={before}/>
+      <img src={process.env.PUBLIC_URL + `/image/Chapter${imgNum}.gif`} alt="chapter1" />
+      <Contoller icon={faV} rotation={270} size='2xl' onClick={next}/>
     </Container>
   );
 };
