@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ResponsiveLine } from '@nivo/line';
 import { DataListContext } from 'context/GasData/GasDataContext';
 import { useContext, useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
   border: 2px solid lightgray;
@@ -20,6 +21,8 @@ interface dataList {
 export const Graph = () => {
   const { DataList } = useContext(DataListContext);
   const [dataList, setDataList] = useState<Array<dataList>>([]);
+  const location = useLocation();
+  const date = new Date();
   const data = [
     {
       id: 'gas',
@@ -30,8 +33,9 @@ export const Graph = () => {
 
   useEffect(() => {
     DataList.map((Data) => {
-      setDataList(dataList => [...dataList, {x: `${Data.year}.${Data.month}`, y: Data.usage}]);
+      setDataList(dataList => [...dataList, {x: `20${Data.year}.${Data.month}`, y: Data.usage}]);
     });
+    setDataList(dataList => [...dataList, {x: `${date.getFullYear()}.${date.getMonth()+1}`, y: location.state}])
   }, []);
 
   return (

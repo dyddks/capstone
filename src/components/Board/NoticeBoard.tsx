@@ -36,17 +36,17 @@ export const NoticeBoard = () => {
     setCurrentPage(pageNumber);
   };
 
-  // useEffect(() => {
-  //   axios.get(`/board/list?page=${currentPage}`) //서버에서 공지사항 리스트 받아오기
-  //   .then((result) => {
-  //     setItems(result.data.content);
-  //     setTotalPage(result.data.totalPages);
-  //   })
-  //  .catch((error) => {
-  //    alert('현재 서비스를 이용할 수 없습니다.');
-  //    console.error(error);
-  //  });
-  // }, [currentPage]);
+  useEffect(() => {
+    axios.get(`/board/cast-list?page=${currentPage}`) //서버에서 공지사항 리스트 받아오기
+    .then((result) => {
+      setItems(result.data.content);
+      setTotalPage(result.data.totalPages);
+    })
+    .catch((error) => {
+      alert('현재 서비스를 이용할 수 없습니다.');
+      console.error(error);
+    });
+  }, [currentPage]);
 
   return (
     <Container>

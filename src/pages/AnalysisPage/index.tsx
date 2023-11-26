@@ -1,9 +1,11 @@
 import styled from '@emotion/styled';
 import { DataInputSet } from 'components/DataInputSet';
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { DataListContext } from 'context/GasData/GasDataContext';
 import { DataListView } from 'components/DataList';
+import axios from 'axios';
+import { Loading } from 'components/Loading';
 
 const Container = styled.div`
   display: flex;
@@ -54,19 +56,53 @@ const Button = styled.button`
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
   }
 `;
+interface Send {
+  readonly year: number;
+  readonly use: number;
+}
 
 export const AnalysisPage = () => {
   const nav = useNavigate();
   const { DataList } = useContext(DataListContext);
+  const curruntDate = new Date();
+  const month = curruntDate.getMonth();
+  const pre_month = 24+month;
+  const user_input: Send[] = [];
+  const [loading, setLoaing] = useState(false);
 
   const analysisResult = () => {
     if (DataList.length !== 6) {
       alert('최소 6개의 데이터가 필요합니다.');
       return;
     }
-    nav('/result')
+    
+    DataList.forEach((data) => {
+      let date = '';
+      if (data.month < 10) {
+        date = `${data.year}0${data.month}`;
+      } else {
+        date = `${data.year}${data.month}`;
+      }
+      user_input.push({year:Number(date), use: data.usage})
+    })
+    setLoaing(true);
+
+    axios.post('/predict', {
+      pre_month,
+      user_input
+    })
+    .then((result) => {
+      setLoaing(false);
+      nav('/result', {state: result.data.prediction});
+    })
+    .catch(() => {
+      alert('잠시후 다시 시도해주세요.');
+    })
   }
   return(
+    <>
+    {loading === true ?
+    <Loading message='데이터를 분석 중입니다.'/> :
     <Container>
       <Title>
         <Image src='./image/analysisBackground.png' alt="Description"/>
@@ -78,6 +114,7 @@ export const AnalysisPage = () => {
         <DataListView/>
       </AnalysisDataSet>
       <Button onClick={analysisResult}>예측하기</Button>
-    </Container>
+    </Container>}
+    </>
   )
 }

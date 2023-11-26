@@ -1,8 +1,9 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import moment from 'moment';
 import axios from 'axios';
+import { BoardDataContext } from 'context/BoardData';
 
 const Container = styled.div`
   display: flex;
@@ -85,18 +86,20 @@ export const PostDetail = () => {
   const [userName, setUserName] = useState('');
   const [createAt, setCreateAt] = useState('');
   const nav = useNavigate();
+  const { getBoardId, boardId } = useContext(BoardDataContext);
   const location = useLocation();
 
   useEffect(() => {
     axios.get(`board/${location.state}`)
     .then((result) => {
-      setPostId(result.data.id);
+      setPostId(result.data.id)
+      getBoardId(result.data.id);
       setTitle(result.data.title);
       setContent(result.data.content);
       setUserName(result.data.name);
       setCreateAt(moment(result.data.createdAt).format('YYYY년 MM월 DD일 HH:mm'));
     })
-  });
+  }, []);
 
   const deletePost = () => {
     // 게시글 삭제

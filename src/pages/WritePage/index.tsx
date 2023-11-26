@@ -36,6 +36,14 @@ const Title = styled.input`
   width: 50%;
   margin-bottom: 1rem;
 `;
+const CheckBox = styled.div`
+  display: flex;
+  font-weight: bold;
+  width: 50%;
+  flex-direction: row-reverse;
+  jutify-content: reverse;
+`;
+
 const Body = styled.textarea`
   font-size: 1.2rem;
   width: 50%;
@@ -66,6 +74,7 @@ export const WritePage = () => {
   const [postId, setPostId] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [checked, setChecked] = useState(0);
   const {
     register,
     handleSubmit,
@@ -83,6 +92,14 @@ export const WritePage = () => {
     }
   });
 
+  const CheckType = () => {
+    if (checked === 0) {
+      setChecked(1);
+    } else {
+      setChecked(0);
+    }
+  }
+
   const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
     if (location.state !== null) {
       const Data = {
@@ -90,9 +107,10 @@ export const WritePage = () => {
         user_id: sessionStorage.getItem('id'),
         title: data.title,
         content: data.content,
+        type: checked
       };
       
-      const { id, user_id, title, content } = Data;
+      const { id, user_id, title, content, type } = Data;
       if (title === '') {
         alert('제목을 입력해 주세요');
       } else if (content === '') {
@@ -103,6 +121,7 @@ export const WritePage = () => {
           title,
           content,
           user_id,
+          type
         })
         .then(() => {
           alert('게시글이 수정되었습니다.');
@@ -118,8 +137,9 @@ export const WritePage = () => {
         userId: sessionStorage.getItem('id'),
         title: data.title,
         content: data.content,
+        type: checked
       };
-      const { userId, title, content } = Data;
+      const { userId, title, content, type } = Data;
       if (title === '') {
         alert('제목을 입력해 주세요');
       } else if (content === '') {
@@ -127,8 +147,9 @@ export const WritePage = () => {
       } else {
         axios.post('/board/write', {
           title,
-            content,
-            userId,
+          content,
+          userId,
+          type
         })
         .then(() => {
           alert('게시글이 등록되었습니다.');
@@ -146,7 +167,13 @@ export const WritePage = () => {
     <>
       <Container onSubmit={handleSubmit(onSubmitHandler)}>
         <Div>자유게시판</Div>
-        <Label>게시글 작성</Label>
+        <Label>
+          게시글 작성
+        </Label>
+        {sessionStorage.getItem('type') === '1' ? 
+        <CheckBox>
+          공지사항<input type='checkbox' onClick={CheckType}/>
+        </CheckBox> : ''}
         <Hr />
         <Title placeholder="제목을 입력해 주세요" defaultValue={title} {...register('title')} />
         <Body

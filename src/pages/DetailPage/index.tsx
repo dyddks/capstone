@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { useState } from 'react';
 import { PostDetail } from 'components/PostDetail';
 import { Comment } from 'components/Comment';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
@@ -22,13 +22,11 @@ const Button = styled.button`
 `;
 export const DetailPage = () => {
   const nav = useNavigate();
-  const [id, setId] = useState();
-  const location = useLocation();
 
   return (
     <Container>
       <PostDetail />
-      <Comment id={location.state}/>
+      <Comment />
       <Button onClick={() => nav(-1)}>목록으로</Button>
     </Container>
   );

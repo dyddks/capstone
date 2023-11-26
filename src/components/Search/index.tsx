@@ -35,10 +35,12 @@ export const Search = ({ search }: Props) => {
 
   const onClick = (userName: string) => {
     search(userName);
+    setUserName('');
   };
+  
   return (
     <Container>
-      <Input placeholder="이름으로 검색" onChange={(e) => setUserName(e.target.value)}></Input>
+      <Input placeholder="이름으로 검색" value={userName} onChange={(e) => setUserName(e.target.value)}></Input>
       <Button onClick={() => onClick(userName)}>검색</Button>
     </Container>
   );

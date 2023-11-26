@@ -51,6 +51,21 @@ export const DataInputSet = () => {
       }
     }
 
+    if (year === 0) {
+      alert('년도를 선택해주세요.');
+      return;
+    }
+
+    if (month === 0) {
+      alert('월을 선택해주세요.');
+      return;
+    }
+
+    if (usage === 0 || isNaN(usage)) {
+      alert('사용량은 0이상의 숫자입니다.');
+      return;
+    }
+
     if (DataList.length === 6) {
       alert('데이터는 최대 6개까지만 입력 가능합니다.');
       return;

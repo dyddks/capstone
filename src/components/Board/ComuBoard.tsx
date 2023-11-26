@@ -11,6 +11,7 @@ const Container = styled.div`
   width: 100%;
   font-size: 1.2rem;
 `;
+
 const PageButton = styled.button`
   margin: 0 3px;
   border: none;
@@ -34,7 +35,6 @@ export const ComuBoard = ({ userName }: Props) => {
   const [items, setItems] = useState<ReadonlyArray<Item>>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [totalPage, setTotalPage] = useState(0);
-
   const handleClick = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
@@ -54,21 +54,17 @@ export const ComuBoard = ({ userName }: Props) => {
 
     if (userName !== '') {
       setItems([]);
-      // fetch(`/board/userlist?page=${currentPage}`) //유저 게시물 받아오기
-      // .then(Response => Response.json())
-      // .then((json) => {
-      //     setItems(json.content);
-      //     setTotalPage(json.totalPages);
-      // })
-      // .catch((error) => {
-      //     console.error(error);
-      // });
-      items.forEach((item) => {
-        if (item.userName === userName) {
-          setItems([...items, item]);
-        }
+      fetch(`/board/list/${userName}?page=${currentPage}`) //유저 게시물 받아오기
+      .then(Response => Response.json())
+      .then((json) => {
+          setItems(json.content);
+          setTotalPage(json.totalPages);
+      })
+      .catch((error) => {
+          console.error(error);
       });
     }
+
   }, [currentPage, userName]);
 
   return (

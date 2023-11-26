@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { UserDataContext, UserDataContextProvider } from 'context/UserData/UserDataContext';
 import { userInfo } from 'os';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Container = styled.form`
   display: flex;
@@ -67,32 +68,24 @@ export const LogInForm = ({ title }: Props) => {
   // 유효성 통과 됬을때 submitHandler
   const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
     const { email, password } = data;
-    fetch('user/login', {
-      method: 'POST',
-      body: JSON.stringify({
+      axios.post('user/login', {
         email,
         password,
-      }),
-      headers: {
-        'Content-type': 'application/json; charset=UTF-8',
-      },
-    })
-      .then((Response) => Response.json())
-      .then((json) => {
-        if (json === null) {
-          alert('이메일이나 비밀번호가 틀렸습니다.');
-        } else {
-          sessionStorage.setItem('email', json.email);
-          sessionStorage.setItem('id', json.id);
-          sessionStorage.setItem('phone', json.phone);
-          sessionStorage.setItem('name', json.name);
-          alert(sessionStorage.name + '님 환영합니다');
-          nav(-1);
-        }
       })
-      .catch((error) => {
-        console.error(error);
-      });
+      .then((result) => {
+        if (result.data === null) {
+          alert('이메일이나 비밀번호가 틀렸습니다.');
+          return;
+        }
+
+        sessionStorage.setItem('email', result.data.email);
+        sessionStorage.setItem('id', result.data.id);
+        sessionStorage.setItem('phone', result.data.phone);
+        sessionStorage.setItem('name', result.data.name);
+        sessionStorage.setItem('type', result.data.type);
+        alert(sessionStorage.name + '님 환영합니다');
+        nav('/');
+      })
   };
 
   return (

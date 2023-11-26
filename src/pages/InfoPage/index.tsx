@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { useState, useEffect } from 'react'
 import { faV } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Carousel from 'react-bootstrap/Carousel';
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ export const InfoPage = () => {
       } else {
         setImgNum(imgNum + 1);
       }
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(intervalId);
   }, [imgNum]);
@@ -44,10 +45,11 @@ export const InfoPage = () => {
     }
     setImgNum(imgNum - 1);
   }
+
   return (
     <Container>
       <Contoller icon={faV} rotation={90} size='2xl' onClick={before}/>
-      <img src={process.env.PUBLIC_URL + `/image/Chapter${imgNum}.gif`} alt="chapter1" />
+        <img src={process.env.PUBLIC_URL + `/image/Chapter${imgNum}.gif`} alt="chapter1" />
       <Contoller icon={faV} rotation={270} size='2xl' onClick={next}/>
     </Container>
   );

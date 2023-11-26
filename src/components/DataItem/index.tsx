@@ -28,7 +28,7 @@ export const DataItem = ({ data, onDelete }: Props) => {
   return (
     <>
       <Container>
-        <Label>{data.year}년</Label>
+        <Label>20{data.year}년</Label>
         <Label>{data.month}월</Label>
         <Label>{data.usage}m³</Label>
         <Button label="삭제" onClick={onDelete}></Button>

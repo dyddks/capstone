@@ -7,15 +7,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { UserDataContextProvider } from 'context/UserData/UserDataContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DataListContextProvider } from 'context/GasData/GasDataContext';
+import { BoardDataContextProvider } from 'context/BoardData';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <React.StrictMode>
     <DataListContextProvider>
       <UserDataContextProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <BoardDataContextProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </BoardDataContextProvider>
       </UserDataContextProvider>
     </DataListContextProvider>
   </React.StrictMode>,

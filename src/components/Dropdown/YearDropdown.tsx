@@ -31,18 +31,9 @@ export const YearDropdown = ({ storeYear }: Props) => {
     <Container>
       <DropdownMenu value={selectedYear} onChange={handleYearChange}>
         <DropdownItem value={0}>년도를 선택하세요</DropdownItem>
-        <DropdownItem value={2023}>2023</DropdownItem>
-        {/* <DropdownItem value={2022}>2022</DropdownItem>
-        <DropdownItem value={2021}>2021</DropdownItem>
-        <DropdownItem value={2020}>2020</DropdownItem>
-        <DropdownItem value={2019}>2019</DropdownItem>
-        <DropdownItem value={2018}>2018</DropdownItem>
-        <DropdownItem value={2017}>2017</DropdownItem>
-        <DropdownItem value={2016}>2016</DropdownItem>
-        <DropdownItem value={2015}>2015</DropdownItem>
-        <DropdownItem value={2014}>2014</DropdownItem>
-        <DropdownItem value={2013}>2013</DropdownItem>
-        <DropdownItem value={2012}>2012</DropdownItem> */}
+        <DropdownItem value={23}>2023</DropdownItem>
+        <DropdownItem value={22}>2022</DropdownItem>
+        <DropdownItem value={21}>2021</DropdownItem>
       </DropdownMenu>
     </Container>
   );

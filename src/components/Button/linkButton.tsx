@@ -10,7 +10,7 @@ const Container = styled.button`
   font-weight: 900;
   font-size: 1.2rem;
 
-  &:hover {
+  :hover {
     opacity: 0.5;
   }
 `;

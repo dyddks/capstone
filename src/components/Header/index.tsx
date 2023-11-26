@@ -10,6 +10,7 @@ const Container = styled.div`
   decoration: none;
   justify-content: space-between;
   align-items: center;
+  height: 10vh;
 `;
 const Nav = styled.div`
   display: flex;
@@ -20,7 +21,6 @@ const Title = styled(Link)`
   text-decoration: none;
   font-size: 2rem;
   font-weight: bold;
-  font-style: italic;
   color: gray;
 `;
 const Logo = styled.img`
@@ -64,7 +64,7 @@ export const Header = () => {
   return (
     <Container>
       <Title to="/">
-        <Logo src="./image/logo.png" alt="Description" />
+        {/* <Logo src="./image/logo.png" alt="Description" /> */}
         H-Track
       </Title>
       <Navigator />

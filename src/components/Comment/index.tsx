@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { CommentItem } from 'components/CommentItem';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
+import { BoardDataContext } from 'context/BoardData';
 
 const Container = styled.div`
   display: flex;
@@ -20,13 +21,15 @@ const Input = styled.input`
 `;
 const Button = styled.button`
   width: 10%;
+  margin-right: 1%;
   border-radius: 4px;
 
   :hover {
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
   }
 `;
-const InputSet = styled.form`
+
+const InputSet = styled.div`
   display: flex;
   width: 50%;
   margin-bottom: 2rem;
@@ -34,8 +37,16 @@ const InputSet = styled.form`
 const ShowComment = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 50%;
 `;
+
+const CommentSet = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+`;
+
 const PageButton = styled.button`
   margin: 0 3px;
 
@@ -44,42 +55,37 @@ const PageButton = styled.button`
   }
 `;
 
-interface Props {
-  readonly id: string;
-}
 interface Item {
-  readonly id: string;
+  readonly comment_id: string;
   readonly comment: string;
-  readonly userName: string;
+  readonly name: string;
 }
 
-interface FormValue {
-  readonly comment: string;
-}
-export const Comment = ({id}: Props) => {
+export const Comment = () => {
   const [items, setItems] = useState<ReadonlyArray<Item>>([]);
-  const [boardId, setBoardId] = useState('');
+  const [comment_id, setComment_id] = useState('');
+  const [Comment, setComment] = useState('');
+  const [modifyCheck, setModifyCheck] = useState(false);
+  const [postId, setPostId] = useState('');
   const location = useLocation();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    reset,
-  } = useForm<FormValue>({
-    mode: 'onSubmit',
-  });
-
-  const itemsPerPage = 4;
+  const itemsPerPage = 5;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
   useEffect(() => {
-    axios.get(`board/${id}`)
+    axios.get(`board/${location.state}`)
     .then((result) => {
-      setBoardId(result.data.id);
+      setPostId(result.data.id)
     })
+
+    axios.get(`/comment/list/${postId}`) //서버에서 게시물 리스트 받아오기
+    .then((result) => {
+      setItems(result.data);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
   });
 
   const handleClick = (pageNumber: number) => {
@@ -87,53 +93,92 @@ export const Comment = ({id}: Props) => {
   };
 
   const visibleItems = items.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-  // fetch("comment/write") //서버에서 댓글 받아오기
-  //     .then(Response => Response.json())
-  //     .then((json) => setItems(json))
-  //     .catch((error) => {
-  //         console.error(error);
-  //     });
-  const onSubmitHandler: SubmitHandler<FormValue> = (data) => {
+
+  const onSubmit = () => {
     const Data = {
-      comment: data.comment,
+      comment: Comment,
       user_id: sessionStorage.getItem('id'),
-      board_id: boardId};
+      board_id: postId};
     const {comment, user_id, board_id} = Data;
-    
-    axios.post('comment/write', {
+
+    if (modifyCheck === false) {
+      axios.post('comment/write', {
+        comment,
+        user_id,
+        board_id
+      })
+      .then((result) => {
+        if (result.data.state === 1) {
+          alert(result.data.message);
+          setComment('');
+        }
+      })
+      .catch((errors) => {
+        console.log(errors);
+        alert('잠시후 다시 시도해주세요.');
+      });
+      return;
+    }
+
+    axios.post('comment/modify', {
       comment,
       user_id,
-      board_id
+      comment_id
+    })
+    .then((result) => {
+      if (result.data.state === 1) {
+        alert(result.data.message);
+        setComment('');
+      }
+    })
+    .catch(() => {
+      alert('잠시후 다시 시도해주세요.');
+    });
+
+    setModifyCheck(false);
+  };
+
+  const modify = (id: string, comment: string) => {
+    setModifyCheck(true);
+    setComment_id(id);
+    setComment(comment);
+  };
+
+  const onDelete = (comment_id: string, user_id: string | null) => {
+    axios.delete('comment/delete', {
+      data: {
+        comment_id,
+        user_id
+      }
     })
     .then((result) => {
       if (result.data.state === 1) {
         alert(result.data.message);
       }
     })
-    .catch((errors) => {
-      console.log(errors);
+    .catch(() => {
       alert('잠시후 다시 시도해주세요.');
-    });
-  };
-
-  const comment = {
-    required: '입력하세요',
-  };
-
+    })
+  }
+  
   return (
     <Container>
-      <InputSet onSubmit={handleSubmit(onSubmitHandler)}>
-        <Input placeholder="댓글" {...register('comment', comment)} />
-        <Button>등록</Button>
+      <InputSet>
+        <Input placeholder="댓글" value={Comment} onChange={(e) => setComment(e.target.value)} />
+        <Button onClick={onSubmit}>등록</Button>
+        
       </InputSet>
+
       <ShowComment>
         {visibleItems.map((item) => (
-          <CommentItem
-            key={item.id}
-            id={item.id}
-            comment={item.comment}
-            userName={item.userName}
-          ></CommentItem>
+          <CommentSet key={item.comment_id}>
+            <CommentItem
+              comment={item.comment}
+              userName={item.name}
+            ></CommentItem>
+            <Button onClick={() => modify(item.comment_id, item.comment)}>수정</Button>
+            <Button onClick={() => onDelete(item.comment_id, sessionStorage.getItem('id'))}>삭제</Button>
+          </CommentSet>
         ))}
         <div>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
