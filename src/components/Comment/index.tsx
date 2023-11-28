@@ -54,6 +54,9 @@ const PageButton = styled.button`
     cursor: pointer;
   }
 `;
+const Hr = styled.hr`
+width: 100%;
+`;
 
 interface Item {
   readonly comment_id: string;
@@ -69,7 +72,7 @@ export const Comment = () => {
   const [postId, setPostId] = useState('');
   const location = useLocation();
 
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
@@ -104,6 +107,10 @@ export const Comment = () => {
       board_id: postId};
     const {comment, user_id, board_id} = Data;
 
+    if (comment === '') {
+      alert('댓글을 입력해주세요.');
+      return;
+    }
     if (modifyCheck === false) {
       axios.post('comment/write', {
         comment,
@@ -131,13 +138,14 @@ export const Comment = () => {
     .then((result) => {
       if (result.data.state === 1) {
         alert(result.data.message);
-        setComment('');
+      } else {
+        alert(result.data.message);
       }
     })
     .catch(() => {
       alert('잠시후 다시 시도해주세요.');
     });
-
+    setComment('');
     setModifyCheck(false);
   };
 
@@ -157,6 +165,8 @@ export const Comment = () => {
     .then((result) => {
       if (result.data.state === 1) {
         alert(result.data.message);
+      } else {
+        alert(result.data.message);
       }
     })
     .catch(() => {
@@ -169,19 +179,22 @@ export const Comment = () => {
       <InputSet>
         <Input placeholder="댓글" value={Comment} onChange={(e) => setComment(e.target.value)} />
         <Button onClick={onSubmit}>등록</Button>
-        
       </InputSet>
 
       <ShowComment>
         {visibleItems.map((item) => (
+          <>
           <CommentSet key={item.comment_id}>
             <CommentItem
               comment={item.comment}
               userName={item.name}
             ></CommentItem>
+            
             <Button onClick={() => modify(item.comment_id, item.comment)}>수정</Button>
             <Button onClick={() => onDelete(item.comment_id, sessionStorage.getItem('id'))}>삭제</Button>
           </CommentSet>
+          <Hr/>
+          </>
         ))}
         <div>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
