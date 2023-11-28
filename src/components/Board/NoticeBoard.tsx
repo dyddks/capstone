@@ -12,12 +12,13 @@ const Container = styled.div`
   width: 100%;
   font-size: 1.2rem;
 `;
-const PageButton = styled.button`
-  margin: 0 3px;
 
-  :hover {
-    cursor: pointer;
-  }
+const PageButton = styled.button`
+  margin: 3px;
+  border: none;
+  background-color: #ffffff;
+  font-weight: 540;
+  font-size: 1.5rem;
 `;
 
 interface Item {
@@ -60,13 +61,13 @@ export const NoticeBoard = () => {
         ></BoardItem>
       ))}
       <div>
-        {Array.from({ length: totalPage }, (_, index) => index + 1).map((pageNumber) => (
+        {Array.from({ length: totalPage }, (_, index) => index).map((pageNumber) => (
           <PageButton
             key={pageNumber}
             onClick={() => handleClick(pageNumber)}
             disabled={pageNumber === currentPage}
           >
-            {pageNumber}
+            {pageNumber + 1}
           </PageButton>
         ))}
       </div>

@@ -64,9 +64,7 @@ interface Send {
 export const AnalysisPage = () => {
   const nav = useNavigate();
   const { DataList } = useContext(DataListContext);
-  const curruntDate = new Date();
-  const month = curruntDate.getMonth();
-  const pre_month = 24+month;
+  let pre_month = 0;
   const user_input: Send[] = [];
   const [loading, setLoaing] = useState(false);
 
@@ -84,6 +82,16 @@ export const AnalysisPage = () => {
         date = `${data.year}${data.month}`;
       }
       user_input.push({year:Number(date), use: data.usage})
+      
+      if (data.year === 21) {
+        pre_month = data.month-1;
+      }
+      if (data.year === 22) {
+        pre_month = 12 + data.month-1;
+      }
+      if (data.year === 23) {
+        pre_month = 24 + data.month-1;
+      }
     })
     setLoaing(true);
 

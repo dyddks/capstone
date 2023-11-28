@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { InfoPage } from 'pages/InfoPage';
 import { MiniComu } from 'components/Board/MiniBoard/MiniComu';
 import { MiniNotice } from 'components/Board/MiniBoard/MiniNotice';
+import { InfoSlide } from 'components/InfoSlide';
 
 const Container = styled.div`
   display: flex;
@@ -24,7 +24,7 @@ export const MainPage = () => {
 
   return (
     <Container>
-      <InfoPage/>
+      <InfoSlide/>
       <MiniBoard>
         <MiniComu/>
         <MiniNotice/>

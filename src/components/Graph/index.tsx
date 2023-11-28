@@ -35,7 +35,7 @@ export const Graph = () => {
     DataList.map((Data) => {
       setDataList(dataList => [...dataList, {x: `20${Data.year}.${Data.month}`, y: Data.usage}]);
     });
-    setDataList(dataList => [...dataList, {x: `${date.getFullYear()}.${date.getMonth()+1}`, y: location.state}])
+    setDataList(dataList => [...dataList, {x: `20${DataList[5].year}.${Number(DataList[5].month)+1}`, y: location.state}])
   }, []);
 
   return (

@@ -67,7 +67,7 @@ export const UnRegisterForm = () => {
       password: data.password,
     };
     const { id, password } = Data;
-
+    
     axios.delete('/user/delete', {
       data: {
         id,
@@ -75,14 +75,16 @@ export const UnRegisterForm = () => {
       }
     })
     .then((result) => {
-      if (result.data.state === 1) {
-        sessionStorage.removeItem('email');
-        sessionStorage.removeItem('id');
-        alert('회원탈퇴가 완료되었습니다.');
-        nav('/');
-      } else {
+      if (result.data.state === 0) {
         alert('비밀번호가 틀립니다.');
+      } else {
+        sessionStorage.clear();
+        alert(result.data.message);
+        nav('/');
       }
+    })
+    .catch(() => {
+      alert('잠시후 다시 시도해주세요.');
     });
   };
   // password 유효성 검사 조건

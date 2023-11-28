@@ -7,6 +7,7 @@ import { UnRegisterForm } from 'components/UnRegister';
 const Container = styled.div`
   display: flex;
   width: 100%;
+  margin: 7% 0;
 `;
 const MyPageNav = styled.div`
   display: flex;

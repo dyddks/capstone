@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button } from 'components/Button/linkButton';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Navigator from 'components/Navigator';
 
@@ -10,7 +10,7 @@ const Container = styled.div`
   decoration: none;
   justify-content: space-between;
   align-items: center;
-  height: 10vh;
+  height: 8rem;
 `;
 const Nav = styled.div`
   display: flex;
@@ -24,13 +24,12 @@ const Title = styled(Link)`
   color: gray;
 `;
 const Logo = styled.img`
-  width: 4rem;
+  width: 7rem;
 `;
 
 export const Header = () => {
   const [login, setLogin] = useState('로그인');
   const nav = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (sessionStorage.getItem('id') !== null) {
@@ -64,8 +63,7 @@ export const Header = () => {
   return (
     <Container>
       <Title to="/">
-        {/* <Logo src="./image/logo.png" alt="Description" /> */}
-        H-Track
+        <Logo src="./image/logo.png" alt="Description" />
       </Title>
       <Navigator />
       <Nav>

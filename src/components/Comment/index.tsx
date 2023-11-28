@@ -78,8 +78,11 @@ export const Comment = () => {
     .then((result) => {
       setPostId(result.data.id)
     })
+    .catch((errors) => {
+      console.log(errors);
+    })
 
-    axios.get(`/comment/list/${postId}`) //서버에서 게시물 리스트 받아오기
+    axios.get(`/comment/list/${postId}`) 
     .then((result) => {
       setItems(result.data);
     })

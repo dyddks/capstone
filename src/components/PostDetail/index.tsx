@@ -86,14 +86,12 @@ export const PostDetail = () => {
   const [userName, setUserName] = useState('');
   const [createAt, setCreateAt] = useState('');
   const nav = useNavigate();
-  const { getBoardId, boardId } = useContext(BoardDataContext);
   const location = useLocation();
 
   useEffect(() => {
     axios.get(`board/${location.state}`)
     .then((result) => {
       setPostId(result.data.id)
-      getBoardId(result.data.id);
       setTitle(result.data.title);
       setContent(result.data.content);
       setUserName(result.data.name);
