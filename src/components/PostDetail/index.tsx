@@ -85,6 +85,7 @@ export const PostDetail = () => {
   const [content, setContent] = useState('');
   const [userName, setUserName] = useState('');
   const [createAt, setCreateAt] = useState('');
+  const [type, setType] = useState(0);
   const nav = useNavigate();
   const location = useLocation();
 
@@ -95,6 +96,7 @@ export const PostDetail = () => {
       setTitle(result.data.title);
       setContent(result.data.content);
       setUserName(result.data.name);
+      setType(result.data.type);
       setCreateAt(moment(result.data.createdAt).format('YYYY년 MM월 DD일 HH:mm'));
     })
   }, []);
@@ -130,7 +132,7 @@ export const PostDetail = () => {
 
   return (
     <Container>
-      <Div>자유게시판</Div>
+      <Div>{type === 1 ? '공지사항' : '자유게시판'}</Div>
       <Title>{title}</Title>
       <WriteInfo>
         <Writter>{userName}</Writter>

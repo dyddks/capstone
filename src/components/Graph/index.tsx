@@ -5,10 +5,13 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 const Container = styled.div`
-  border: 2px solid lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 4px solid lightgray;
   border-radius: 16px;
-  width: 70vw;
-  height: 50vh;
+  width: 70%;
+  height: 60vh;
   background-color: #fefefe;
   margin: 5% 0;
 `;
@@ -22,7 +25,6 @@ export const Graph = () => {
   const { DataList } = useContext(DataListContext);
   const [dataList, setDataList] = useState<Array<dataList>>([]);
   const location = useLocation();
-  const date = new Date();
   const data = [
     {
       id: 'gas',
@@ -42,7 +44,7 @@ export const Graph = () => {
     <Container>
       <ResponsiveLine
         data={data}
-        margin={{ top: 50, right: 110, bottom: 50, left: 60 }}
+        margin={{ top: 50, right: 60, bottom: 50, left: 60 }}
         xScale={{ type: 'point' }}
         yScale={{
           type: 'linear',
@@ -69,7 +71,9 @@ export const Graph = () => {
           legendOffset: -40,
           legendPosition: 'middle',
         }}
+        enableGridX={false}
         pointSize={10}
+        lineWidth={3}
         pointColor={{ theme: 'background' }}
         pointBorderWidth={2}
         pointBorderColor={{ from: 'serieColor' }}

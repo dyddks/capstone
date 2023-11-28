@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { MiniComu } from 'components/Board/MiniBoard/MiniComu';
 import { MiniNotice } from 'components/Board/MiniBoard/MiniNotice';
 import { InfoSlide } from 'components/InfoSlide';
+import { Shortcuts } from 'components/Shortcuts';
 
 const Container = styled.div`
   display: flex;
@@ -20,8 +21,6 @@ const MiniBoard = styled.div`
 `;
 
 export const MainPage = () => {
-  const nav = useNavigate();
-
   return (
     <Container>
       <InfoSlide/>
@@ -29,6 +28,7 @@ export const MainPage = () => {
         <MiniComu/>
         <MiniNotice/>
       </MiniBoard>
+      <Shortcuts/>
     </Container>
   );
 };
