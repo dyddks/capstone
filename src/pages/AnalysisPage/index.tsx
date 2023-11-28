@@ -56,6 +56,7 @@ const Button = styled.button`
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1) inset;
   }
 `;
+
 interface Send {
   readonly year: number;
   readonly use: number;
@@ -94,7 +95,7 @@ export const AnalysisPage = () => {
       }
     })
     setLoaing(true);
-
+    axios.defaults.timeout = 15000;
     axios.post('/predict', {
       pre_month,
       user_input
@@ -105,6 +106,7 @@ export const AnalysisPage = () => {
     })
     .catch(() => {
       alert('잠시후 다시 시도해주세요.');
+      setLoaing(false);
     })
   }
   return(
