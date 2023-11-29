@@ -15,27 +15,14 @@ const Contents = styled.div`
   margin-left: 2%;
 `;
 
-const Logo = styled.div`
-  display: flex;
-`;
-
-const Icon = styled.img`
-  height: 8rem;
-`;
-
 export const Footer = () => {
   return (
     <Container>
       <Contents>
-        공주대학교 컴퓨터공학부 소프트웨어학과
-        <br />
-        Copyrightⓒ2023 그작됩
+        공주대학교 컴퓨터공학부 소프트웨어학과<br/>
+        Capstone Design Project<br/>
+        Copyrightⓒ2023 그래도작동은됩니다 
       </Contents>
-      {/* <Logo>
-                <Icon src='../image/footerLogo.png'/>
-                <Icon src='../image/bearLogo.jpg'/>
-            </Logo> */}
-      {/* <a href="https://kr.freepik.com/free-vector/business-growth-strategy-isometric-composition-with-bar-chart-and-circular-graph-elements-computer-screen-and-workers-vector-illustration_37916099.htm">작가 macrovector</a> 출처 Freepik */}
     </Container>
   );
 };
