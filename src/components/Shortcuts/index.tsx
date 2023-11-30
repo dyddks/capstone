@@ -16,7 +16,6 @@ const Area = styled.div`
 
 const Label = styled.div`
   margin-bottom: 0.5rem;
-  font-weight: bold;
 `;
 
 const Items = styled.ul`
