@@ -110,7 +110,11 @@ export const UpdateForm = () => {
   const updatePhoneNunber = () => {
     const name = sessionStorage.getItem('name');
     const password = cerrentPassword;
-
+    const phoneRegex = /^\d{3}-\d{3,4}-\d{4}$/;
+    if (!phoneRegex.test(phone)) {
+      alert('올바른 형식이 아닙니다.');
+      return;
+    }
     axios.post('user/update', {
       id,
       name,

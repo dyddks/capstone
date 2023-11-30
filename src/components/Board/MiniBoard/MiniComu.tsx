@@ -12,7 +12,7 @@ const Container = styled.div`
   font-size: 1.2rem;
   border-radius: 16px;
   background-color: #ffffff;
-  margin: 1% 0;
+  margin: 2% 0;
 `;
 
 const Title = styled.div`

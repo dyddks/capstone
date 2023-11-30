@@ -4,7 +4,6 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
-import { UserDataContextProvider } from 'context/UserData/UserDataContext';
 import 'bootstrap/dist/css/bootstrap.css';
 import { DataListContextProvider } from 'context/GasData/GasDataContext';
 import { BoardDataContextProvider } from 'context/BoardData';
@@ -13,13 +12,11 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(
   <React.StrictMode>
     <DataListContextProvider>
-      <UserDataContextProvider>
         <BoardDataContextProvider>
           <BrowserRouter>
             <App />
           </BrowserRouter>
         </BoardDataContextProvider>
-      </UserDataContextProvider>
     </DataListContextProvider>
   </React.StrictMode>,
 );

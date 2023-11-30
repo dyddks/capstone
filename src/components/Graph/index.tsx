@@ -13,7 +13,7 @@ const Container = styled.div`
   width: 70%;
   height: 60vh;
   background-color: #fefefe;
-  margin: 5% 0;
+  margin: 2% 0;
 `;
 
 interface dataList {
@@ -37,7 +37,12 @@ export const Graph = () => {
     DataList.map((Data) => {
       setDataList(dataList => [...dataList, {x: `20${Data.year}.${Data.month}`, y: Data.usage}]);
     });
-    setDataList(dataList => [...dataList, {x: `20${DataList[5].year}.${Number(DataList[5].month)+1}`, y: location.state}])
+
+    if(Number(DataList[5].month) === 12){
+      setDataList(dataList => [...dataList, {x: `20${Number(DataList[5].year)+1}.1`, y: location.state}]);
+    } else {
+      setDataList(dataList => [...dataList, {x: `20${DataList[5].year}.${Number(DataList[5].month)+1}`, y: location.state}]);
+    }
   }, []);
 
   return (
