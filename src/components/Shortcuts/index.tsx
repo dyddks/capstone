@@ -28,9 +28,11 @@ const Items = styled.div`
 const Item = styled.a`
   color: #aaaaaa;
   text-decoration: none;
+
   :hover {
     cursor: pointer;
-    opacity: 0.5;
+    
+    color: #1672fc;
   }
 `;
 

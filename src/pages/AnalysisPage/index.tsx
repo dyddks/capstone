@@ -84,14 +84,14 @@ export const AnalysisPage = () => {
       }
       user_input.push({year:Number(date), use: data.usage})
       
-      if (data.year === 21) {
-        pre_month = data.month-1;
+      if (Number(data.year) === 21) {
+        pre_month = Number(data.month);
       }
-      if (data.year === 22) {
-        pre_month = 12 + data.month-1;
+      if (Number(data.year) === 22) {
+        pre_month = 12 + Number(data.month);
       }
-      if (data.year === 23) {
-        pre_month = 24 + data.month-1;
+      if (Number(data.year) === 23) {
+        pre_month = 24 + Number(data.month);
       }
     })
     setLoaing(true);

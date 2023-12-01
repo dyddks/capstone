@@ -33,17 +33,38 @@ export const Graph = () => {
     },
   ];
 
-  useEffect(() => {
-    DataList.map((Data) => {
-      setDataList(dataList => [...dataList, {x: `20${Data.year}.${Data.month}`, y: Data.usage}]);
-    });
+  // useEffect(() => {
+  //   DataList.map((Data) => {
+  //     setDataList([...dataList, {x: `20${Data.year}.${Data.month}`, y: Data.usage}]);
+  //   });
 
-    if(Number(DataList[5].month) === 12){
-      setDataList(dataList => [...dataList, {x: `20${Number(DataList[5].year)+1}.1`, y: location.state}]);
+  //   if(Number(DataList[5].month) === 12){
+  //     setDataList([...dataList, {x: `20${Number(DataList[5].year)+1}.1`, y: location.state}]);
+  //   } else {
+  //     setDataList([...dataList, {x: `20${DataList[5].year}.${Number(DataList[5].month)+1}`, y: location.state}]);
+  //   }
+  // }, []);
+  useEffect(() => {
+    const updatedDataList = DataList.map((Data) => ({
+      x: `20${Data.year}.${Data.month}`,
+      y: Data.usage
+    }));
+  
+    if (Number(DataList[5].month) === 12) {
+      updatedDataList.push({
+        x: `20${Number(DataList[5].year) + 1}.1`,
+        y: location.state
+      });
     } else {
-      setDataList(dataList => [...dataList, {x: `20${DataList[5].year}.${Number(DataList[5].month)+1}`, y: location.state}]);
+      updatedDataList.push({
+        x: `20${DataList[5].year}.${Number(DataList[5].month) + 1}`,
+        y: location.state
+      });
     }
-  }, []);
+  
+    setDataList(updatedDataList);
+  }, [DataList, location.state]);
+  
 
   return (
     <Container>
@@ -55,7 +76,7 @@ export const Graph = () => {
           type: 'linear',
           min: 'auto',
           max: 'auto',
-          stacked: true,
+          stacked: false,
           reverse: false,
         }}
         axisTop={null}

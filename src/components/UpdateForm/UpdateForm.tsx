@@ -47,24 +47,22 @@ export const UpdateForm = () => {
   const nav = useNavigate();
   const [cerrentPassword, setCurrentPassword] = useState('');
   const [phone, setPhone] = useState('');
-  const [password, setPassword] = useState('');
+  const [new_passwd, setPassword] = useState('');
   const [name, setName] = useState('');
   const id = sessionStorage.getItem('id');
 
   const updatePassword = () => {
-    const  name = sessionStorage.getItem('name');
-    const phone = sessionStorage.getItem('phone');
-    
-    if (password.length < 4 || password.length > 13) {
+    const passwd = cerrentPassword;
+
+    if (new_passwd.length < 4 || new_passwd.length > 13) {
       alert('비밀번호는 4자 이상 13자 이하 입니다.');
       return;
     }
     
-    axios.post('user/update', {
+    axios.post('user/passwd-change', {
       id,
-      name,
-      password,
-      phone,
+      passwd,
+      new_passwd,
     })
     .then((result) => {
       if (result.data.state === 1) {

@@ -23,6 +23,9 @@ const Git = styled(FontAwesomeIcon)`
 `;
 
 export const Footer = () => {
+  const git = () => {
+    <a href='https://www.naver.com'/>
+  }
   return (
     <Container>
       <Contents>
@@ -30,7 +33,7 @@ export const Footer = () => {
         Capstone Design Project<br/>
         Copyrightⓒ2023 그래도작동은됩니다 
       </Contents>
-      <Git icon={faGithub}/>
+      <Git icon={faGithub}></Git>
     </Container>
   );
 };
